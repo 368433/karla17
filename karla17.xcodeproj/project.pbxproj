@@ -1,0 +1,638 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		316EC90828F20EC1002FCFF8 /* karla17App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC90728F20EC1002FCFF8 /* karla17App.swift */; };
+		316EC90A28F20EC1002FCFF8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC90928F20EC1002FCFF8 /* Persistence.swift */; };
+		316EC90D28F20EC1002FCFF8 /* karla17.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 316EC90B28F20EC1002FCFF8 /* karla17.xcdatamodeld */; };
+		316EC90F28F20EC1002FCFF8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC90E28F20EC1002FCFF8 /* ContentView.swift */; };
+		316EC91128F20EC2002FCFF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 316EC91028F20EC2002FCFF8 /* Assets.xcassets */; };
+		316EC91528F20EC2002FCFF8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 316EC91428F20EC2002FCFF8 /* Preview Assets.xcassets */; };
+		316EC91F28F20EC2002FCFF8 /* karla17Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC91E28F20EC2002FCFF8 /* karla17Tests.swift */; };
+		316EC92928F20EC2002FCFF8 /* karla17UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC92828F20EC2002FCFF8 /* karla17UITests.swift */; };
+		316EC92B28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC92A28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		316EC91B28F20EC2002FCFF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 316EC8FC28F20EC0002FCFF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 316EC90328F20EC1002FCFF8;
+			remoteInfo = karla17;
+		};
+		316EC92528F20EC2002FCFF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 316EC8FC28F20EC0002FCFF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 316EC90328F20EC1002FCFF8;
+			remoteInfo = karla17;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		316EC90428F20EC1002FCFF8 /* karla17.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = karla17.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		316EC90728F20EC1002FCFF8 /* karla17App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = karla17App.swift; sourceTree = "<group>"; };
+		316EC90928F20EC1002FCFF8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		316EC90C28F20EC1002FCFF8 /* karla17.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = karla17.xcdatamodel; sourceTree = "<group>"; };
+		316EC90E28F20EC1002FCFF8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		316EC91028F20EC2002FCFF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		316EC91228F20EC2002FCFF8 /* karla17.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = karla17.entitlements; sourceTree = "<group>"; };
+		316EC91428F20EC2002FCFF8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		316EC91A28F20EC2002FCFF8 /* karla17Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = karla17Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		316EC91E28F20EC2002FCFF8 /* karla17Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = karla17Tests.swift; sourceTree = "<group>"; };
+		316EC92428F20EC2002FCFF8 /* karla17UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = karla17UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		316EC92828F20EC2002FCFF8 /* karla17UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = karla17UITests.swift; sourceTree = "<group>"; };
+		316EC92A28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = karla17UITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		316EC90128F20EC1002FCFF8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		316EC91728F20EC2002FCFF8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		316EC92128F20EC2002FCFF8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		316EC8FB28F20EC0002FCFF8 = {
+			isa = PBXGroup;
+			children = (
+				316EC90628F20EC1002FCFF8 /* karla17 */,
+				316EC91D28F20EC2002FCFF8 /* karla17Tests */,
+				316EC92728F20EC2002FCFF8 /* karla17UITests */,
+				316EC90528F20EC1002FCFF8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		316EC90528F20EC1002FCFF8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				316EC90428F20EC1002FCFF8 /* karla17.app */,
+				316EC91A28F20EC2002FCFF8 /* karla17Tests.xctest */,
+				316EC92428F20EC2002FCFF8 /* karla17UITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		316EC90628F20EC1002FCFF8 /* karla17 */ = {
+			isa = PBXGroup;
+			children = (
+				316EC90728F20EC1002FCFF8 /* karla17App.swift */,
+				316EC90928F20EC1002FCFF8 /* Persistence.swift */,
+				316EC90E28F20EC1002FCFF8 /* ContentView.swift */,
+				316EC91028F20EC2002FCFF8 /* Assets.xcassets */,
+				316EC91228F20EC2002FCFF8 /* karla17.entitlements */,
+				316EC90B28F20EC1002FCFF8 /* karla17.xcdatamodeld */,
+				316EC91328F20EC2002FCFF8 /* Preview Content */,
+			);
+			path = karla17;
+			sourceTree = "<group>";
+		};
+		316EC91328F20EC2002FCFF8 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				316EC91428F20EC2002FCFF8 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		316EC91D28F20EC2002FCFF8 /* karla17Tests */ = {
+			isa = PBXGroup;
+			children = (
+				316EC91E28F20EC2002FCFF8 /* karla17Tests.swift */,
+			);
+			path = karla17Tests;
+			sourceTree = "<group>";
+		};
+		316EC92728F20EC2002FCFF8 /* karla17UITests */ = {
+			isa = PBXGroup;
+			children = (
+				316EC92828F20EC2002FCFF8 /* karla17UITests.swift */,
+				316EC92A28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift */,
+			);
+			path = karla17UITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		316EC90328F20EC1002FCFF8 /* karla17 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 316EC92E28F20EC2002FCFF8 /* Build configuration list for PBXNativeTarget "karla17" */;
+			buildPhases = (
+				316EC90028F20EC1002FCFF8 /* Sources */,
+				316EC90128F20EC1002FCFF8 /* Frameworks */,
+				316EC90228F20EC1002FCFF8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = karla17;
+			productName = karla17;
+			productReference = 316EC90428F20EC1002FCFF8 /* karla17.app */;
+			productType = "com.apple.product-type.application";
+		};
+		316EC91928F20EC2002FCFF8 /* karla17Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 316EC93128F20EC2002FCFF8 /* Build configuration list for PBXNativeTarget "karla17Tests" */;
+			buildPhases = (
+				316EC91628F20EC2002FCFF8 /* Sources */,
+				316EC91728F20EC2002FCFF8 /* Frameworks */,
+				316EC91828F20EC2002FCFF8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				316EC91C28F20EC2002FCFF8 /* PBXTargetDependency */,
+			);
+			name = karla17Tests;
+			productName = karla17Tests;
+			productReference = 316EC91A28F20EC2002FCFF8 /* karla17Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		316EC92328F20EC2002FCFF8 /* karla17UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 316EC93428F20EC2002FCFF8 /* Build configuration list for PBXNativeTarget "karla17UITests" */;
+			buildPhases = (
+				316EC92028F20EC2002FCFF8 /* Sources */,
+				316EC92128F20EC2002FCFF8 /* Frameworks */,
+				316EC92228F20EC2002FCFF8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				316EC92628F20EC2002FCFF8 /* PBXTargetDependency */,
+			);
+			name = karla17UITests;
+			productName = karla17UITests;
+			productReference = 316EC92428F20EC2002FCFF8 /* karla17UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		316EC8FC28F20EC0002FCFF8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1400;
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					316EC90328F20EC1002FCFF8 = {
+						CreatedOnToolsVersion = 14.0.1;
+					};
+					316EC91928F20EC2002FCFF8 = {
+						CreatedOnToolsVersion = 14.0.1;
+						TestTargetID = 316EC90328F20EC1002FCFF8;
+					};
+					316EC92328F20EC2002FCFF8 = {
+						CreatedOnToolsVersion = 14.0.1;
+						TestTargetID = 316EC90328F20EC1002FCFF8;
+					};
+				};
+			};
+			buildConfigurationList = 316EC8FF28F20EC0002FCFF8 /* Build configuration list for PBXProject "karla17" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 316EC8FB28F20EC0002FCFF8;
+			productRefGroup = 316EC90528F20EC1002FCFF8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				316EC90328F20EC1002FCFF8 /* karla17 */,
+				316EC91928F20EC2002FCFF8 /* karla17Tests */,
+				316EC92328F20EC2002FCFF8 /* karla17UITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		316EC90228F20EC1002FCFF8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				316EC91528F20EC2002FCFF8 /* Preview Assets.xcassets in Resources */,
+				316EC91128F20EC2002FCFF8 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		316EC91828F20EC2002FCFF8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		316EC92228F20EC2002FCFF8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		316EC90028F20EC1002FCFF8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				316EC90D28F20EC1002FCFF8 /* karla17.xcdatamodeld in Sources */,
+				316EC90828F20EC1002FCFF8 /* karla17App.swift in Sources */,
+				316EC90F28F20EC1002FCFF8 /* ContentView.swift in Sources */,
+				316EC90A28F20EC1002FCFF8 /* Persistence.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		316EC91628F20EC2002FCFF8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				316EC91F28F20EC2002FCFF8 /* karla17Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		316EC92028F20EC2002FCFF8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				316EC92B28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift in Sources */,
+				316EC92928F20EC2002FCFF8 /* karla17UITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		316EC91C28F20EC2002FCFF8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 316EC90328F20EC1002FCFF8 /* karla17 */;
+			targetProxy = 316EC91B28F20EC2002FCFF8 /* PBXContainerItemProxy */;
+		};
+		316EC92628F20EC2002FCFF8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 316EC90328F20EC1002FCFF8 /* karla17 */;
+			targetProxy = 316EC92528F20EC2002FCFF8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		316EC92C28F20EC2002FCFF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		316EC92D28F20EC2002FCFF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		316EC92F28F20EC2002FCFF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = karla17/karla17.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"karla17/Preview Content\"";
+				DEVELOPMENT_TEAM = 6365P5X875;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Ursularium.karla17;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		316EC93028F20EC2002FCFF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = karla17/karla17.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"karla17/Preview Content\"";
+				DEVELOPMENT_TEAM = 6365P5X875;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Ursularium.karla17;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		316EC93228F20EC2002FCFF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6365P5X875;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Ursularium.karla17Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/karla17.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/karla17";
+			};
+			name = Debug;
+		};
+		316EC93328F20EC2002FCFF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6365P5X875;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Ursularium.karla17Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/karla17.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/karla17";
+			};
+			name = Release;
+		};
+		316EC93528F20EC2002FCFF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6365P5X875;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Ursularium.karla17UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = karla17;
+			};
+			name = Debug;
+		};
+		316EC93628F20EC2002FCFF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6365P5X875;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Ursularium.karla17UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = karla17;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		316EC8FF28F20EC0002FCFF8 /* Build configuration list for PBXProject "karla17" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				316EC92C28F20EC2002FCFF8 /* Debug */,
+				316EC92D28F20EC2002FCFF8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		316EC92E28F20EC2002FCFF8 /* Build configuration list for PBXNativeTarget "karla17" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				316EC92F28F20EC2002FCFF8 /* Debug */,
+				316EC93028F20EC2002FCFF8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		316EC93128F20EC2002FCFF8 /* Build configuration list for PBXNativeTarget "karla17Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				316EC93228F20EC2002FCFF8 /* Debug */,
+				316EC93328F20EC2002FCFF8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		316EC93428F20EC2002FCFF8 /* Build configuration list for PBXNativeTarget "karla17UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				316EC93528F20EC2002FCFF8 /* Debug */,
+				316EC93628F20EC2002FCFF8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		316EC90B28F20EC1002FCFF8 /* karla17.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				316EC90C28F20EC1002FCFF8 /* karla17.xcdatamodel */,
+			);
+			currentVersion = 316EC90C28F20EC1002FCFF8 /* karla17.xcdatamodel */;
+			path = karla17.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 316EC8FC28F20EC0002FCFF8 /* Project object */;
+}
