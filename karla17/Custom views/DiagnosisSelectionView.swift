@@ -8,37 +8,46 @@
 import SwiftUI
 
 struct DiagnosisSelectionRowView: View {
+    @State private var showInfo = false
     var diagnosis: Diagnosis
-//    var isSelected: Bool
     var body: some View{
         HStack{
-            Text(diagnosis.name)
+            VStack(alignment: .leading){
+                Text(diagnosis.name)
+                if showInfo{
+                    Text(diagnosis.information).foregroundColor(.secondary)
+                }
+            }
+            
             Spacer()
-            Button(action: {}) {
-                Image(systemName: "plus.square")
+            Button(action: {showInfo.toggle()}) {
+                Image(systemName: "info.circle")
             }
         }.contentShape(Rectangle())
     }
 }
 
 struct DiagnosisSelectionView: View {
-    @State private var multiSelection = Set<UUID>()
-    private var availableDiagnosis: [Diagnosis] = [Diagnosis()]
-    @State private var selectedDiagnosis: [Diagnosis] = []
-    
-    init(_ diagnosed: Diagnosed){
-        self.selectedDiagnosis = diagnosed.diagnosisList
-    }
+    var availableDiagnosis: [Diagnosis] = [Diagnosis()]
+    @State var primaryDiagnosis: Diagnosis? = nil
+    @State var otherDiagnosis: Set<Diagnosis> = []
+    @State private var showDiagnosisEdit = false
     
     var body: some View {
         List{
             //Selected Diagnoses
             Section{
-                if selectedDiagnosis.isEmpty {
+                if otherDiagnosis.isEmpty {
                     Text("No diagnosis selected")
                 }
-                ForEach(selectedDiagnosis) { diagnosis in
+                ForEach(Array(otherDiagnosis)) { diagnosis in
                     DiagnosisSelectionRowView(diagnosis: diagnosis)
+                        .onTapGesture {
+                            showDiagnosisEdit.toggle()
+                        }
+                        .sheet(isPresented: $showDiagnosisEdit) {
+                            DiagnosisView(diagnosis: diagnosis)
+                        }
                 }
             } header: {
                 Text("Selected diagnosis")
@@ -49,7 +58,7 @@ struct DiagnosisSelectionView: View {
                 ForEach(availableDiagnosis){dx in
                     DiagnosisSelectionRowView(diagnosis: dx)
                         .onTapGesture {
-                            selectedDiagnosis.append(dx)
+                            otherDiagnosis.insert(dx)
                         }
                 }
             } header: {
@@ -66,8 +75,8 @@ struct DiagnosisSelectionView: View {
 
 struct DiagnosisSelectionView_Previews: PreviewProvider {
     static var previews: some View {
-        DiagnosisSelectionView(WorkCard())
-        DiagnosisSelectionView(WorkCard()).preferredColorScheme(.dark)
+        DiagnosisSelectionView()
+        DiagnosisSelectionView().preferredColorScheme(.dark)
 
     }
 }

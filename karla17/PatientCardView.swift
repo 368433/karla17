@@ -143,13 +143,13 @@ struct WorkcardView: View {
                 Section {
                     // DIAGNOSIS ROW
                     NavigationLink {
-                        DiagnosisSelectionView(workcard)
+                        DiagnosisSelectionView()
                     } label: {
                         Label {
                             HStack{
                                 Text("Diagnosis")
                                 Spacer()
-                                Text("a diagnosis")
+                                Text(workcard.primaryDiagnosis?.name ?? "no primary dx")
                                     .foregroundColor(.secondary)
                             }
                         } icon: {

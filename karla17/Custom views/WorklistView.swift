@@ -20,12 +20,26 @@ struct WorklistView: View {
     // MARK: - BODY
     var body: some View{
         NavigationStack {
-            List(worklist.workCards, selection: $multiSelection){ card in
-                WorklistRowView(workcard: card)
-                    .onTapGesture {
-                        showWorkCard.toggle()
+            List{
+                Section {
+                    ForEach(worklist.workCards){ card in
+                        WorklistRowView(workcard: card)
+                            .onTapGesture {
+                                showWorkCard.toggle()
+                            }
                     }
+                } header: {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack{
+                            Button("All", action: {})
+                            Button("to see", action: {})
+                            Button("seen", action: {})
+                            Button("Inactive", action: {})
+                        }.buttonStyle(.bordered).buttonBorderShape(.capsule).font(.footnote)
+                    }
+                }
             }
+            
             .sheet(isPresented: $showWorkCard, content: {
                 WorkcardView()
             })
