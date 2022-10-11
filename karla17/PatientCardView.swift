@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct KarlaImages {
-    var workcard = "note.text"
+    static var workcard = "note.text"
+    static var worklist = "tray.full.fill"
 }
 
 struct Patient: Identifiable {
@@ -21,22 +22,20 @@ struct Patient: Identifiable {
     var ramqNumber = ""
 }
 
-struct Diagnosis {
-    var name = "Pneumonia"
-    var icdCode = "1324"
-}
-
 struct Visit {
     var date = Date()
     var patient: Patient? = nil
     var diagnosis: Diagnosis? = nil
 }
 
-struct WorkCard: Identifiable {
+struct WorkCard: Identifiable, Diagnosed {
     var id = UUID()
-    var patient: Patient? = nil
-    var diagnosis: Diagnosis? = nil
-    var visits: [Visit]? = nil
+    var patient: Patient = Patient()
+    var primaryDiagnosis: Diagnosis? = nil
+    var diagnosisList: [Diagnosis] = []
+    var visits: [Visit] = []
+    var cardFlagged = false
+    var status: CardStatus = .active
 }
 
 struct WorkList: Identifiable {
@@ -47,21 +46,22 @@ struct WorkList: Identifiable {
 }
 
 struct WorklistRowView: View {
-    @State private var showFullCard = false
-    
     var workcard: WorkCard
     var body: some View{
         HStack{
-            Button { showFullCard.toggle()} label: {Image(systemName: "plus.diamond").font(.title3)}.buttonStyle(.borderless)
-                .sheet(isPresented: $showFullCard, content: {
-                    WorkcardView()
-                })
-            Spacer()
+            Menu {
+                Button("Add visit", action: {})
+                Button("See tomorrow", action: {})
+                Button("Update room", action: {})
+            } label: {
+                Image(systemName: "plus.diamond")
+            }
+
             VStack(alignment: .leading){
                 
                 // Patient name and chart number
                 HStack{
-                    Text(workcard.patient?.name ?? "Missing patient name").lineLimit(1)
+                    Text(workcard.patient.name).lineLimit(1)
                     Spacer()
                     Text("#34232").foregroundColor(.secondary).font(.footnote)
                 }
@@ -72,12 +72,6 @@ struct WorklistRowView: View {
                     Spacer()
                     Text("234")
                 }.foregroundColor(.secondary)
-                
-                // BUTTON LIST
-                HStack{
-                    Button("Add visit", action: {}).buttonStyle(.bordered).buttonBorderShape(.capsule)
-                    Button("Skip", action: {}).buttonStyle(.bordered).buttonBorderShape(.capsule)
-                }.font(.caption)
             }
         }
         .contentShape(Rectangle())
@@ -114,11 +108,69 @@ struct LabeledTextField: View {
     }
 }
 
+
+
+struct DiagnosisSelectionRowView: View {
+    var diagnosis: Diagnosis
+//    var isSelected: Bool
+    var body: some View{
+        HStack{
+            Text(diagnosis.name)
+            Spacer()
+            Button(action: {}) {
+                Image(systemName: "plus.square")
+            }
+        }.contentShape(Rectangle())
+    }
+}
+
+struct DiagnosisSelectionView: View {
+    @State private var multiSelection = Set<UUID>()
+    private var availableDiagnosis: [Diagnosis] = [Diagnosis()]
+    @State private var selectedDiagnosis: [Diagnosis] = []
+    
+    init(_ diagnosed: Diagnosed){
+        self.selectedDiagnosis = diagnosed.diagnosisList
+    }
+    
+    var body: some View {
+        List{
+            //Selected Diagnoses
+            Section{
+                if selectedDiagnosis.isEmpty {
+                    Text("No diagnosis selected")
+                }
+                ForEach(selectedDiagnosis) { diagnosis in
+                    DiagnosisSelectionRowView(diagnosis: diagnosis)
+                }
+            } header: {
+                Text("Selected diagnosis")
+            }
+            
+            //Diagnosis list
+            Section{
+                ForEach(availableDiagnosis){dx in
+                    DiagnosisSelectionRowView(diagnosis: dx)
+                        .onTapGesture {
+                            selectedDiagnosis.append(dx)
+                        }
+                }
+            } header: {
+                Text("Diagnosis database")
+            }.headerProminence(.increased)
+        }
+        .toolbar{
+            Button(action: {}, label: {Image(systemName: "magnifyingglass")})
+            Button(action: {}, label: {Image(systemName: "plus")})
+        }
+    }
+}
+
 struct WorkcardView: View {
     @Environment(\.dismiss) var dismiss
-    @State var status: CardStatus = .active
     @State private var patientCardVisible = false
-    @State var patient: Patient = Patient()
+    @State private var showDateAdmitted = false
+    @State private var workcard: WorkCard = WorkCard()
     
     var body: some View {
         NavigationStack{
@@ -126,16 +178,16 @@ struct WorkcardView: View {
                 //Patient card view
                 Section {
                     DisclosureGroup(isExpanded: $patientCardVisible) {
-                        LabeledTextField("Full name", text: $patient.name)
-                        LabeledTextField("Chart #", text: $patient.chartNumber)
+                        LabeledTextField("Full name", text: $workcard.patient.name)
+                        LabeledTextField("Chart #", text: $workcard.patient.chartNumber)
                             .keyboardType(.numberPad)
-                        LabeledTextField("RAMQ number", text: $patient.ramqNumber)
+                        LabeledTextField("RAMQ number", text: $workcard.patient.ramqNumber)
                             .keyboardType(.namePhonePad)
-                        LabeledTextField("Postal code", text: $patient.postalCode)
+                        LabeledTextField("Postal code", text: $workcard.patient.postalCode)
                             .keyboardType(.asciiCapableNumberPad)
-                        LabeledTextField("Phone number", text: $patient.phoneNumber)
+                        LabeledTextField("Phone number", text: $workcard.patient.phoneNumber)
                             .keyboardType(.phonePad)
-                        DatePicker("Date of birth", selection: $patient.dateOfBirth, displayedComponents: .date)
+                        DatePicker("Date of birth", selection: $workcard.patient.dateOfBirth, displayedComponents: .date)
                         DisclosureGroup {
                             Text("Add scan")
                         } label: {
@@ -146,7 +198,7 @@ struct WorkcardView: View {
                             HStack{
                                 Text("Patient")
                                 Spacer()
-                                Text(patient.name.isEmpty ? "Missing name":patient.name).foregroundColor(.secondary)
+                                Text(workcard.patient.name.isEmpty ? "Missing name":workcard.patient.name).foregroundColor(.secondary)
                             }
                         } icon: {
                             Image(systemName: "person.crop.square.fill")
@@ -157,28 +209,31 @@ struct WorkcardView: View {
                         HStack{
                             Spacer()
                             VStack(alignment: .trailing){
-                                Text("Chart #: \(patient.chartNumber)")
-                                Text("RAMQ #: \(patient.ramqNumber)")
+                                Text("Chart #: \(workcard.patient.chartNumber)")
+                                Text("RAMQ #: \(workcard.patient.ramqNumber)")
                             }.foregroundColor(.secondary)
-
-                        }
+                        }.font(.subheadline)
                     }
                 }
                 
                 //Medical condition view
                 Section {
                     // DIAGNOSIS ROW
-                    Label {
-                        HStack{
-                            Text("Diagnosis")
-                            Spacer()
-                            Text("a diagnosis")
-                                .foregroundColor(.secondary)
+                    NavigationLink {
+                        DiagnosisSelectionView(workcard)
+                    } label: {
+                        Label {
+                            HStack{
+                                Text("Diagnosis")
+                                Spacer()
+                                Text("a diagnosis")
+                                    .foregroundColor(.secondary)
+                            }
+                        } icon: {
+                            Image(systemName: "heart.text.square.fill").font(.title).foregroundColor(.red)
                         }
-                    } icon: {
-                        Image(systemName: "heart.text.square.fill").font(.title).foregroundColor(.red)
                     }
-                    
+
                     // VISITS ROW
                     Label {
                         HStack{
@@ -191,25 +246,70 @@ struct WorkcardView: View {
                     }
                 }
                 
-                //Flag toggle
-                Toggle(isOn: Binding(projectedValue: .constant(true))) {
-                    Label {
-                        Text("Flag")
-                    } icon: {
-                        Image(systemName: "flag.square.fill")
-                            .font(.title)
-                            .foregroundColor(.orange)
+                Section{
+                    // Consulting physician
+                    NavigationLink {
+                        EmptyView()
+                    } label: {
+                        Label {
+                            Text("Consulting MD")
+                        } icon: {
+                            Image(systemName: "stethoscope.circle.fill").font(.title).foregroundColor(.mint)
+                        }
+                    }
+                    
+                    // Hospitalized date
+                    Toggle(isOn: $showDateAdmitted) {
+                        Label {
+                            Text("Date admitted")
+                        } icon: {
+                            Image(systemName: "calendar").font(.title).foregroundColor(.purple)
+                        }
+                    }
+                    if showDateAdmitted {
+                        DatePicker("Select date", selection: Binding(projectedValue: .constant(Date())), displayedComponents: .date)
+                    }
+                    
+                    //Flag toggle
+                    Toggle(isOn: $workcard.cardFlagged) {
+                        Label {
+                            Text("Flag")
+                        } icon: {
+                            Image(systemName: "flag.square.fill")
+                                .font(.title)
+                                .foregroundColor(.orange)
+                        }
                     }
                 }
                 
+                // Scheduled
+                Section {
+                    DatePicker(selection: Binding(projectedValue: .constant(Date())), displayedComponents: .date) {
+                        Label {
+                            Text("Scheduled")
+                        } icon: {
+                            Image(systemName: "calendar.badge.clock").font(.title).foregroundColor(.green)
+                        }
+                    }
+                } footer: {
+                    Text("When is the card next expected to be seen")
+                }
+
+                
                 //Card status section
                 Section{
-                    Picker("Status", selection: $status) {
+                    Picker("Status", selection: $workcard.status) {
                         ForEach(CardStatus.allCases, id:\.self){ state in
                             Text(state.label)
                         }
                     }
-                    Text("List")
+                    NavigationLink(destination: EmptyView()) {
+                        Label {
+                            Text("List")
+                        } icon: {
+                            Image(systemName: KarlaImages.worklist)
+                        }
+                    }
                 }
             }
             .navigationTitle("Details")
@@ -235,6 +335,7 @@ struct WorklistView: View {
     // MARK: - Local variables
     @State private var multiSelection = Set<UUID>()
     @State private var cardsPath: [WorkCard] = []
+    @State private var showWorkCard = false
     
     // MARK: - MODEL
     var worklist = WorkList()
@@ -244,7 +345,13 @@ struct WorklistView: View {
         NavigationStack {
             List(worklist.workCards, selection: $multiSelection){ card in
                 WorklistRowView(workcard: card)
+                    .onTapGesture {
+                        showWorkCard.toggle()
+                    }
             }
+            .sheet(isPresented: $showWorkCard, content: {
+                WorkcardView()
+            })
             .navigationTitle(worklist.name ?? "Workcards")
             .toolbar {
                 Button(action: {}) {
@@ -335,6 +442,13 @@ struct Worklist_Previews: PreviewProvider {
     static var previews: some View {
         WorklistView()
         WorklistView().preferredColorScheme(.dark)
+    }
+}
+
+struct DiagnosisSelectionVIew_Previews: PreviewProvider {
+    static var previews: some View {
+        DiagnosisSelectionView(WorkCard())
+        DiagnosisSelectionView(WorkCard()).preferredColorScheme(.dark)
     }
 }
 
