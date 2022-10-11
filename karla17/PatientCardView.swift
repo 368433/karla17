@@ -59,10 +59,6 @@ struct WorkList: Identifiable {
     var listIcon = KarlaImages.worklistRound
 }
 
-class WorklistModel: ObservableObject {
-    @Published var worklist: WorkList = WorkList()
-}
-
 struct WorklistView: View {
     
     // MARK: - Local variables
@@ -630,6 +626,36 @@ struct PatientCardView: View {
     }
 }
 
+// MARK: - PERSISTENCE LAYER
+
+// Landing view model
+class ListDeck: ObservableObject {
+    @Published var deck: [WorkList] = []
+    init(){
+        self.deck = getDefaultLists()
+    }
+    // Get default lists
+    private func getDefaultLists() -> [WorkList]{
+        return []
+    }
+}
+
+// WorklistView model
+class WorklistModel: ObservableObject {
+    @Published var worklist: WorkList = WorkList()
+    
+    // Save list
+    // Create card
+    // Read/get gard
+    // Update card
+    // Delete card
+    
+}
+
+class WorkCardModel: ObservableObject {
+    
+}
+
 class ListCollection: ObservableObject {
     @Published var lists: [WorkList] = []
     @Published var editedList = WorkList()
@@ -639,6 +665,8 @@ class ListCollection: ObservableObject {
     }
 }
 
+
+// ---
 struct LandingWorklistRowView: View {
     var worklist: WorkList
     var body: some View{
