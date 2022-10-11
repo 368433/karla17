@@ -348,19 +348,36 @@ struct WorkcardView: View {
                         }
                     }
                     if !patientCardVisible {
-                        HStack{
-                            Spacer()
-                            VStack(alignment: .trailing){
+                        Label {
+                            VStack(alignment: .leading){
                                 HStack{
                                     Text("Chart #: ")
-                                    Text(workcard.patient.chartNumber.isEmpty ? "None" : workcard.patient.chartNumber).foregroundColor(.secondary).fontWeight(.light)
+                                    Text(workcard.patient.chartNumber.isEmpty ? "None" : workcard.patient.chartNumber)
                                 }
                                 HStack{
                                     Text("RAMQ #: ")
-                                    Text(workcard.patient.ramqNumber.isEmpty ? "None" : workcard.patient.ramqNumber).foregroundColor(.secondary).fontWeight(.light)
+                                    Text(workcard.patient.ramqNumber.isEmpty ? "None" : workcard.patient.ramqNumber)
                                 }
-                            }.foregroundColor(.secondary).font(.subheadline)
+                            }
+                        } icon: {
+                            Image(systemName: "info")
                         }
+                        .foregroundColor(.secondary)
+                        .font(.callout)
+
+//                        HStack{
+//                            Spacer()
+//                            VStack(alignment: .trailing){
+//                                HStack{
+//                                    Text("Chart #: ")
+//                                    Text(workcard.patient.chartNumber.isEmpty ? "None" : workcard.patient.chartNumber).foregroundColor(.secondary).fontWeight(.light)
+//                                }
+//                                HStack{
+//                                    Text("RAMQ #: ")
+//                                    Text(workcard.patient.ramqNumber.isEmpty ? "None" : workcard.patient.ramqNumber).foregroundColor(.secondary).fontWeight(.light)
+//                                }
+//                            }.foregroundColor(.secondary).font(.subheadline)
+//                        }
                     }
                 }
                 
