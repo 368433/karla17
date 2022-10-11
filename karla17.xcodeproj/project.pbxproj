@@ -16,11 +16,13 @@
 		316EC91F28F20EC2002FCFF8 /* karla17Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC91E28F20EC2002FCFF8 /* karla17Tests.swift */; };
 		316EC92928F20EC2002FCFF8 /* karla17UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC92828F20EC2002FCFF8 /* karla17UITests.swift */; };
 		316EC92B28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC92A28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift */; };
-		316EC93A28F2DAC5002FCFF8 /* CardsWorklistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC93928F2DAC5002FCFF8 /* CardsWorklistView.swift */; };
 		316EC93C28F2DB13002FCFF8 /* PatientCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC93B28F2DB13002FCFF8 /* PatientCardView.swift */; };
 		31EC1D7D28F503C70026BD60 /* DiagnosisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D7C28F503C70026BD60 /* DiagnosisView.swift */; };
 		31EC1D7F28F504780026BD60 /* Diagnosis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D7E28F504780026BD60 /* Diagnosis.swift */; };
 		31EC1D8128F504D10026BD60 /* CustomProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D8028F504D10026BD60 /* CustomProtocols.swift */; };
+		31EC1D8328F506260026BD60 /* WorklistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D8228F506260026BD60 /* WorklistView.swift */; };
+		31EC1D8528F506760026BD60 /* DiagnosisSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D8428F506760026BD60 /* DiagnosisSelectionView.swift */; };
+		31EC1D8728F506FE0026BD60 /* Custom Views and Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D8628F506FE0026BD60 /* Custom Views and Modifiers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,11 +56,13 @@
 		316EC92428F20EC2002FCFF8 /* karla17UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = karla17UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		316EC92828F20EC2002FCFF8 /* karla17UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = karla17UITests.swift; sourceTree = "<group>"; };
 		316EC92A28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = karla17UITestsLaunchTests.swift; sourceTree = "<group>"; };
-		316EC93928F2DAC5002FCFF8 /* CardsWorklistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsWorklistView.swift; sourceTree = "<group>"; };
 		316EC93B28F2DB13002FCFF8 /* PatientCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientCardView.swift; sourceTree = "<group>"; };
 		31EC1D7C28F503C70026BD60 /* DiagnosisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosisView.swift; sourceTree = "<group>"; };
 		31EC1D7E28F504780026BD60 /* Diagnosis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnosis.swift; sourceTree = "<group>"; };
 		31EC1D8028F504D10026BD60 /* CustomProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProtocols.swift; sourceTree = "<group>"; };
+		31EC1D8228F506260026BD60 /* WorklistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorklistView.swift; sourceTree = "<group>"; };
+		31EC1D8428F506760026BD60 /* DiagnosisSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosisSelectionView.swift; sourceTree = "<group>"; };
+		31EC1D8628F506FE0026BD60 /* Custom Views and Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom Views and Modifiers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,10 +116,12 @@
 				316EC90728F20EC1002FCFF8 /* karla17App.swift */,
 				316EC90928F20EC1002FCFF8 /* Persistence.swift */,
 				316EC90E28F20EC1002FCFF8 /* ContentView.swift */,
-				316EC93928F2DAC5002FCFF8 /* CardsWorklistView.swift */,
 				316EC93B28F2DB13002FCFF8 /* PatientCardView.swift */,
+				31EC1D8828F507220026BD60 /* Custom Models */,
+				31EC1D8628F506FE0026BD60 /* Custom Views and Modifiers.swift */,
+				31EC1D8428F506760026BD60 /* DiagnosisSelectionView.swift */,
+				31EC1D8228F506260026BD60 /* WorklistView.swift */,
 				31EC1D8028F504D10026BD60 /* CustomProtocols.swift */,
-				31EC1D7E28F504780026BD60 /* Diagnosis.swift */,
 				31EC1D7C28F503C70026BD60 /* DiagnosisView.swift */,
 				316EC91028F20EC2002FCFF8 /* Assets.xcassets */,
 				316EC91228F20EC2002FCFF8 /* karla17.entitlements */,
@@ -148,6 +154,14 @@
 				316EC92A28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift */,
 			);
 			path = karla17UITests;
+			sourceTree = "<group>";
+		};
+		31EC1D8828F507220026BD60 /* Custom Models */ = {
+			isa = PBXGroup;
+			children = (
+				31EC1D7E28F504780026BD60 /* Diagnosis.swift */,
+			);
+			path = "Custom Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,14 +295,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				316EC90D28F20EC1002FCFF8 /* karla17.xcdatamodeld in Sources */,
+				31EC1D8528F506760026BD60 /* DiagnosisSelectionView.swift in Sources */,
 				316EC90828F20EC1002FCFF8 /* karla17App.swift in Sources */,
 				316EC93C28F2DB13002FCFF8 /* PatientCardView.swift in Sources */,
 				31EC1D8128F504D10026BD60 /* CustomProtocols.swift in Sources */,
 				31EC1D7F28F504780026BD60 /* Diagnosis.swift in Sources */,
+				31EC1D8728F506FE0026BD60 /* Custom Views and Modifiers.swift in Sources */,
 				31EC1D7D28F503C70026BD60 /* DiagnosisView.swift in Sources */,
 				316EC90F28F20EC1002FCFF8 /* ContentView.swift in Sources */,
-				316EC93A28F2DAC5002FCFF8 /* CardsWorklistView.swift in Sources */,
 				316EC90A28F20EC1002FCFF8 /* Persistence.swift in Sources */,
+				31EC1D8328F506260026BD60 /* WorklistView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

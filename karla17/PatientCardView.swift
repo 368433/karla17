@@ -14,7 +14,7 @@ struct KarlaImages {
 
 struct Patient: Identifiable {
     var id = UUID()
-    var name: String = ""
+    var name: String = "Missing name"
     var dateOfBirth = Date()
     var postalCode = ""
     var phoneNumber = ""
@@ -68,7 +68,7 @@ struct WorklistRowView: View {
                 
                 // diagnosis label and room number
                 HStack{
-                    Text("diagnosis").lineLimit(2)
+                    Text(workcard.primaryDiagnosis?.name ?? "No primary diagnosis").lineLimit(2)
                     Spacer()
                     Text("234")
                 }.foregroundColor(.secondary)
@@ -85,83 +85,6 @@ enum CardStatus: CaseIterable {
         case .active: return "Active"
         case .archived: return "Signed Off"
         case .transferred: return "Transferred"
-        }
-    }
-}
-
-struct LabeledTextField: View {
-    var textfieldTitle: String
-    @Binding var text: String
-    
-    init(_ title: String, text: Binding<String>){
-        self.textfieldTitle = title
-        self._text = text
-    }
-    
-    var body: some View{
-        VStack(alignment: .leading, spacing: 0){
-            if !text.isEmpty {
-                Text(textfieldTitle).font(.caption).foregroundColor(.blue)
-            }
-            TextField(textfieldTitle, text: $text)
-        }
-    }
-}
-
-
-
-struct DiagnosisSelectionRowView: View {
-    var diagnosis: Diagnosis
-//    var isSelected: Bool
-    var body: some View{
-        HStack{
-            Text(diagnosis.name)
-            Spacer()
-            Button(action: {}) {
-                Image(systemName: "plus.square")
-            }
-        }.contentShape(Rectangle())
-    }
-}
-
-struct DiagnosisSelectionView: View {
-    @State private var multiSelection = Set<UUID>()
-    private var availableDiagnosis: [Diagnosis] = [Diagnosis()]
-    @State private var selectedDiagnosis: [Diagnosis] = []
-    
-    init(_ diagnosed: Diagnosed){
-        self.selectedDiagnosis = diagnosed.diagnosisList
-    }
-    
-    var body: some View {
-        List{
-            //Selected Diagnoses
-            Section{
-                if selectedDiagnosis.isEmpty {
-                    Text("No diagnosis selected")
-                }
-                ForEach(selectedDiagnosis) { diagnosis in
-                    DiagnosisSelectionRowView(diagnosis: diagnosis)
-                }
-            } header: {
-                Text("Selected diagnosis")
-            }
-            
-            //Diagnosis list
-            Section{
-                ForEach(availableDiagnosis){dx in
-                    DiagnosisSelectionRowView(diagnosis: dx)
-                        .onTapGesture {
-                            selectedDiagnosis.append(dx)
-                        }
-                }
-            } header: {
-                Text("Diagnosis database")
-            }.headerProminence(.increased)
-        }
-        .toolbar{
-            Button(action: {}, label: {Image(systemName: "magnifyingglass")})
-            Button(action: {}, label: {Image(systemName: "plus")})
         }
     }
 }
@@ -330,58 +253,6 @@ struct WorkcardView: View {
     }
 }
 
-struct WorklistView: View {
-    
-    // MARK: - Local variables
-    @State private var multiSelection = Set<UUID>()
-    @State private var cardsPath: [WorkCard] = []
-    @State private var showWorkCard = false
-    
-    // MARK: - MODEL
-    var worklist = WorkList()
-    
-    // MARK: - BODY
-    var body: some View{
-        NavigationStack {
-            List(worklist.workCards, selection: $multiSelection){ card in
-                WorklistRowView(workcard: card)
-                    .onTapGesture {
-                        showWorkCard.toggle()
-                    }
-            }
-            .sheet(isPresented: $showWorkCard, content: {
-                WorkcardView()
-            })
-            .navigationTitle(worklist.name ?? "Workcards")
-            .toolbar {
-                Button(action: {}) {
-                    Image(systemName: "plus")
-                }
-                Menu{
-                    Button {} label: {
-                        Label("Show list info", systemImage: "info.circle")
-                    }
-                    Button {} label: {
-                        Label("Select workcards", systemImage: "checkmark.circle")
-                    }
-                    Button {} label: {
-                        Menu {
-                            Button("test", action: {})
-                        } label: {
-                            Label("Sort by", systemImage: "arrow.up.arrow.down")
-                        }
-                    }
-                    Button(role: .destructive, action: {}) {
-                        Label("Delete worklist", systemImage: "trash")
-                    }
-                } label: {
-                    Image(systemName: "ellipsis.circle")
-                }
-            }
-        }
-    }
-}
-
 struct WorkspaceView: View {
     var body: some View{
         Text("test")
@@ -435,20 +306,6 @@ struct PatientCardView: View {
                 }
             }
         }
-    }
-}
-
-struct Worklist_Previews: PreviewProvider {
-    static var previews: some View {
-        WorklistView()
-        WorklistView().preferredColorScheme(.dark)
-    }
-}
-
-struct DiagnosisSelectionVIew_Previews: PreviewProvider {
-    static var previews: some View {
-        DiagnosisSelectionView(WorkCard())
-        DiagnosisSelectionView(WorkCard()).preferredColorScheme(.dark)
     }
 }
 
