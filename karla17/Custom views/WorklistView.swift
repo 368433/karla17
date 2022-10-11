@@ -7,75 +7,11 @@
 
 import SwiftUI
 
-struct WorklistView: View {
-    
-    // MARK: - Local variables
-    @State private var multiSelection = Set<UUID>()
-    @State private var cardsPath: [WorkCard] = []
-    @State private var showWorkCard = false
-    
-    // MARK: - MODEL
-    var worklist = WorkList()
-    
-    // MARK: - BODY
-    var body: some View{
-        NavigationStack {
-            List{
-                Section {
-                    ForEach(worklist.workCards){ card in
-                        WorklistRowView(workcard: card)
-                            .onTapGesture {
-                                showWorkCard.toggle()
-                            }
-                    }
-                } header: {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack{
-                            Button("All", action: {})
-                            Button("to see", action: {})
-                            Button("seen", action: {})
-                            Button("Inactive", action: {})
-                        }.buttonStyle(.bordered).buttonBorderShape(.capsule).font(.footnote)
-                    }
-                }
-            }
-            
-            .sheet(isPresented: $showWorkCard, content: {
-                WorkcardView()
-            })
-            .navigationTitle(worklist.name ?? "Worklist")
-            .toolbar {
-                Button(action: {}) {
-                    Image(systemName: "plus")
-                }
-                Menu{
-                    Button {} label: {
-                        Label("Show list info", systemImage: "info.circle")
-                    }
-                    Button {} label: {
-                        Label("Select workcards", systemImage: "checkmark.circle")
-                    }
-                    Button {} label: {
-                        Menu {
-                            Button("test", action: {})
-                        } label: {
-                            Label("Sort by", systemImage: "arrow.up.arrow.down")
-                        }
-                    }
-                    Button(role: .destructive, action: {}) {
-                        Label("Delete worklist", systemImage: "trash")
-                    }
-                } label: {
-                    Image(systemName: "ellipsis.circle")
-                }
-            }
-        }
-    }
-}
+
 
 struct WorklistView_Previews: PreviewProvider {
     static var previews: some View {
-        WorklistView()
-        WorklistView().preferredColorScheme(.dark)
+        WorklistView(worklist: WorkList())
+        WorklistView(worklist: WorkList()).preferredColorScheme(.dark)
     }
 }

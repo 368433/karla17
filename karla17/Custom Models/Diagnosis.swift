@@ -7,13 +7,4 @@
 
 import Foundation
 
-struct Diagnosis: Identifiable, Hashable {
-    var id: String
-    var name = "Pneumonia"
-    var icdCode = "1324"
-    var information = ""
-    
-    init(){
-        self.id = self.icdCode
-    }
-}
+

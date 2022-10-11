@@ -14,7 +14,8 @@ struct karla17App: App {
     var body: some Scene {
         WindowGroup {
 //            ContentView()
-            WorklistView()
+//            WorklistView(worklist: WorkList())
+            LandingWorkView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

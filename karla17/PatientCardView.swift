@@ -9,7 +9,8 @@ import SwiftUI
 
 struct KarlaImages {
     static var workcard = "note.text"
-    static var worklist = "tray.full.fill"
+    static var worklist = "list.bullet"
+    static var worklistRound = "list.bullet.circle.fill"
 }
 
 struct Patient: Identifiable {
@@ -28,50 +29,272 @@ struct Visit {
     var diagnosis: Diagnosis? = nil
 }
 
+struct Diagnosis: Identifiable, Hashable {
+    var id: String
+    var name = ""
+    var icdCode = "000"
+    var information = ""
+    
+    init(){
+        self.id = self.icdCode
+    }
+}
+
 struct WorkCard: Identifiable, Diagnosed {
     var id = UUID()
     var patient: Patient = Patient()
-    var primaryDiagnosis: Diagnosis? = nil
+    var primaryDiagnosis: Diagnosis = Diagnosis()
     var diagnosisList: [Diagnosis] = []
     var visits: [Visit] = []
     var cardFlagged = false
     var status: CardStatus = .active
+    var room: String = ""
 }
 
 struct WorkList: Identifiable {
     var id = UUID()
-    var name: String?
+    var name: String = ""
     var dateCreatetd: Date?
     var workCards: [WorkCard] = [WorkCard(), WorkCard()]
+    var listIcon = KarlaImages.worklistRound
+}
+
+class WorklistModel: ObservableObject {
+    @Published var worklist: WorkList = WorkList()
+}
+
+struct WorklistView: View {
+    
+    // MARK: - Local variables
+    @State private var multiSelection = Set<UUID>()
+    @State private var cardsPath: [WorkCard] = []
+    @State private var showWorkCard = false
+    @State private var showNewWorkCard = false
+    
+    // MARK: - MODEL
+    //var worklist: WorkList
+    @ObservedObject var model = WorklistModel()
+    init(worklist: WorkList){
+        self.model.worklist = worklist
+    }
+    init(){
+        
+    }
+    
+    // MARK: - BODY
+    var body: some View{
+        NavigationStack {
+            List{
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack{
+                        Button("All", action: {})
+                        Button("to see", action: {})
+                        Button("seen", action: {})
+                        Button("Inactive", action: {})
+                    }.buttonStyle(.bordered).buttonBorderShape(.capsule).font(.footnote)
+                }
+                ForEach(model.worklist.workCards){ card in
+                    WorklistRowView(workcard: card)
+                }
+            }
+            .listStyle(.plain)
+            .sheet(isPresented: $showWorkCard, content: {
+                WorkcardView()
+            })
+            .navigationTitle(model.worklist.name.isEmpty ? "Worklist" : model.worklist.name)
+            .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                Button(action: {showNewWorkCard.toggle()}) {
+                    Image(systemName: "plus")
+                }
+                Menu{
+                    Button {} label: {
+                        Label("Show list info", systemImage: "info.circle")
+                    }
+                    Button {} label: {
+                        Label("Select workcards", systemImage: "checkmark.circle")
+                    }
+                    Button {} label: {
+                        Menu {
+                            Button("test", action: {})
+                        } label: {
+                            Label("Sort by", systemImage: "arrow.up.arrow.down")
+                        }
+                    }
+                    Button(role: .destructive, action: {}) {
+                        Label("Delete worklist", systemImage: "trash")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                }
+            }
+            .sheet(isPresented: $showNewWorkCard, content: {
+                WorkcardView()
+            })
+        }
+    }
+}
+
+struct NewWorklistEditorView: View {
+    @ObservedObject var worklistContainer: ListCollection
+    @Environment(\.dismiss) var dismiss
+    
+    let columns = [GridItem(.fixed(30))]
+    
+    var body: some View {
+        NavigationStack{
+            Form {
+                // List name and large icon
+                VStack{
+                    Image(systemName: worklistContainer.editedList.listIcon)
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.blue)
+                        .padding(.top)
+                    TextField("List Name", text: $worklistContainer.editedList.name)
+                        .font(.title)
+                        .fontWeight(.medium)
+                        .multilineTextAlignment(.center)
+                        .padding(.top)
+                        .textFieldStyle(.roundedBorder)
+                }.frame(height: 140)
+                
+                // Color and icon selection
+                Section{
+                    Text("Color")
+                    Text("Icon")
+                }
+            }
+            .navigationTitle("New list")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar{
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel", role: .cancel, action: {dismiss()})
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done", action: {
+                        worklistContainer.lists.append(worklistContainer.editedList)
+                        dismiss()
+                        worklistContainer.editedList = WorkList()
+                    }).disabled(worklistContainer.editedList.name.isEmpty)
+                }
+            }
+        }
+        
+    }
+}
+
+struct ExistingWorklistEditorView: View {
+    @Binding var worklist: WorkList
+    @Environment(\.dismiss) var dismiss
+    
+    let columns = [GridItem(.fixed(30))]
+    
+    var body: some View {
+        NavigationStack{
+            Form {
+                // List name and large icon
+                VStack{
+                    Image(systemName: worklist.listIcon)
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.blue)
+                        .padding(.top)
+                    TextField("List Name", text: $worklist.name)
+                        .font(.title)
+                        .fontWeight(.medium)
+                        .multilineTextAlignment(.center)
+                        .padding(.top)
+                        .textFieldStyle(.roundedBorder)
+                }.frame(height: 140)
+                
+                // Color and icon selection
+                Section{
+                    Text("Color")
+                    Text("Icon")
+                }
+                
+                Section {
+                    DatePicker(selection: Binding(projectedValue: .constant(Date())), displayedComponents: .date) {
+                        Label("Date created", systemImage: "calendar")
+                    }
+                }
+            }
+            .navigationTitle("List Info")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar{
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel", role: .cancel, action: {dismiss()})
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done", action: {
+                        // TODO: Save function
+                        dismiss()
+                    }).disabled(worklist.name.isEmpty)
+                }
+            }
+        }
+    }
 }
 
 struct WorklistRowView: View {
-    var workcard: WorkCard
+    
+    @State var workcard: WorkCard
+    @FocusState private var focusedField: Bool
+    @State private var showFullWorkcard = false
+    
     var body: some View{
         HStack{
-            Menu {
-                Button("Add visit", action: {})
-                Button("See tomorrow", action: {})
-                Button("Update room", action: {})
-            } label: {
-                Image(systemName: "plus.diamond")
+            VStack(spacing: 8){
+                Menu {
+                    Button(action: {showFullWorkcard.toggle()}) {
+                        Label("Show full card", systemImage: "info.circle")
+                    }
+                    Divider()
+                    Button("Add visit", action: {})
+                    Button("See tomorrow", action: {})
+                    Button("Update room", action: {})
+                } label: {
+                    Image(systemName: "plus.diamond").font(.headline)
+                }
+                if focusedField {
+                    Button(action: {showFullWorkcard.toggle()}, label: {Image(systemName: "info.circle")})
+                        .font(.headline)
+                        .buttonStyle(.borderless)
+                }
+            }
+            .sheet(isPresented: $showFullWorkcard) {
+                WorkcardView()
             }
 
             VStack(alignment: .leading){
                 
                 // Patient name and chart number
                 HStack{
-                    Text(workcard.patient.name).lineLimit(1)
+                    TextField("Full name", text: $workcard.patient.name)
+                        .lineLimit(1)
+                        .focused($focusedField)
+//                    Text(workcard.patient.name).lineLimit(1)
                     Spacer()
                     Text("#34232").foregroundColor(.secondary).font(.footnote)
                 }
                 
                 // diagnosis label and room number
                 HStack{
-                    Text(workcard.primaryDiagnosis?.name ?? "No primary diagnosis").lineLimit(2)
+                    Text("Dx")
+                    TextField("Primary diagnosis", text: $workcard.primaryDiagnosis.name)
+                        .focused($focusedField)
+//                        .fixedSize()
+//                    Text(workcard.primaryDiagnosis?.name ?? "No primary diagnosis")
+                        .lineLimit(2)
                     Spacer()
-                    Text("234")
-                }.foregroundColor(.secondary)
+                    TextField("Room", text: $workcard.room)
+                        .frame(width: 55)
+//                        .fixedSize()
+                        .focused($focusedField)
+                        .multilineTextAlignment(.trailing)
+//                    Text("234")
+                }.foregroundColor(.secondary).font(.callout)
             }
         }
         .contentShape(Rectangle())
@@ -99,7 +322,7 @@ struct WorkcardView: View {
         NavigationStack{
             List{
                 //Patient card view
-                Section {
+                Section (header: Spacer(minLength: 0)){
                     DisclosureGroup(isExpanded: $patientCardVisible) {
                         LabeledTextField("Full name", text: $workcard.patient.name)
                         LabeledTextField("Chart #", text: $workcard.patient.chartNumber)
@@ -132,10 +355,16 @@ struct WorkcardView: View {
                         HStack{
                             Spacer()
                             VStack(alignment: .trailing){
-                                Text("Chart #: \(workcard.patient.chartNumber)")
-                                Text("RAMQ #: \(workcard.patient.ramqNumber)")
-                            }.foregroundColor(.secondary)
-                        }.font(.subheadline)
+                                HStack{
+                                    Text("Chart #: ")
+                                    Text(workcard.patient.chartNumber.isEmpty ? "None" : workcard.patient.chartNumber).foregroundColor(.secondary).fontWeight(.light)
+                                }
+                                HStack{
+                                    Text("RAMQ #: ")
+                                    Text(workcard.patient.ramqNumber.isEmpty ? "None" : workcard.patient.ramqNumber).foregroundColor(.secondary).fontWeight(.light)
+                                }
+                            }.foregroundColor(.secondary).font(.subheadline)
+                        }
                     }
                 }
                 
@@ -149,7 +378,7 @@ struct WorkcardView: View {
                             HStack{
                                 Text("Diagnosis")
                                 Spacer()
-                                Text(workcard.primaryDiagnosis?.name ?? "no primary dx")
+                                Text(workcard.primaryDiagnosis.name)
                                     .foregroundColor(.secondary)
                             }
                         } icon: {
@@ -167,6 +396,20 @@ struct WorkcardView: View {
                     } icon: {
                         Image(systemName: "square.text.square.fill").font(.title).foregroundColor(.yellow)
                     }
+                    
+                    // Room number row
+                    Label {
+                        HStack{
+                            Text("Room")
+                            Spacer()
+                            TextField("current room", text: $workcard.room)
+                                .fixedSize()
+                                .multilineTextAlignment(.trailing)
+                        }
+                    } icon: {
+                        Image(systemName: "bed.double.circle.fill").font(.title)
+                    }
+
                 }
                 
                 Section{
@@ -235,6 +478,7 @@ struct WorkcardView: View {
                     }
                 }
             }
+            .listStyle(.insetGrouped)
             .navigationTitle("Details")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -256,6 +500,83 @@ struct WorkcardView: View {
 struct WorkspaceView: View {
     var body: some View{
         Text("test")
+    }
+}
+
+struct DiagnosisSelectionRowView: View {
+    @State private var showInfo = false
+    var diagnosis: Diagnosis
+    var body: some View{
+        HStack{
+            VStack(alignment: .leading){
+                Text(diagnosis.name)
+                if showInfo{
+                    Text(diagnosis.information).foregroundColor(.secondary)
+                }
+            }
+            
+            Spacer()
+            Button(action: {showInfo.toggle()}) {
+                Image(systemName: "info.circle")
+            }
+        }.contentShape(Rectangle())
+    }
+}
+
+struct DiagnosisSelectionView: View {
+    var availableDiagnosis: [Diagnosis] = [Diagnosis()]
+    @State var primaryDiagnosis: Diagnosis? = nil
+    @State var otherDiagnosis: Set<Diagnosis> = []
+    @State private var showDiagnosisEdit = false
+    
+    var body: some View {
+        List{
+            //Selected Diagnoses
+            Section{
+                if otherDiagnosis.isEmpty {
+                    Text("No diagnosis selected")
+                }
+                ForEach(Array(otherDiagnosis)) { diagnosis in
+                    DiagnosisSelectionRowView(diagnosis: diagnosis)
+                        .onTapGesture {
+                            showDiagnosisEdit.toggle()
+                        }
+                        .sheet(isPresented: $showDiagnosisEdit) {
+                            DiagnosisView(diagnosis: diagnosis)
+                        }
+                }
+            } header: {
+                Text("Selected diagnosis")
+            }
+            
+            //Diagnosis list
+            Section{
+                ForEach(availableDiagnosis){dx in
+                    DiagnosisSelectionRowView(diagnosis: dx)
+                        .onTapGesture {
+                            otherDiagnosis.insert(dx)
+                        }
+                }
+            } header: {
+                Text("Diagnosis database")
+            }.headerProminence(.increased)
+        }
+        .toolbar{
+            Button(action: {}, label: {Image(systemName: "magnifyingglass")})
+            Button(action: {}, label: {Image(systemName: "plus")})
+        }
+    }
+}
+
+struct DiagnosisView: View {
+    @State var diagnosis: Diagnosis
+    
+    var body: some View {
+        Form{
+            LabeledTextField("Name", text: $diagnosis.name)
+            LabeledTextField("ICD code", text: $diagnosis.icdCode)
+            LabeledTextField("Information", text: $diagnosis.information)
+        }
     }
 }
 
@@ -309,9 +630,85 @@ struct PatientCardView: View {
     }
 }
 
+class ListCollection: ObservableObject {
+    @Published var lists: [WorkList] = []
+    @Published var editedList = WorkList()
+    func addNewList(){
+        let newList = WorkList()
+        lists.append(newList)
+    }
+}
+
+struct LandingWorklistRowView: View {
+    var worklist: WorkList
+    var body: some View{
+        HStack{
+            //Image
+            Image(systemName: worklist.listIcon)
+                .foregroundColor(.blue)
+                .font(.title)
+            //Name
+            Text(worklist.name.isEmpty ? "No name" : worklist.name)
+            Spacer()
+            //Card count
+            Text("\(worklist.workCards.count)").foregroundColor(.secondary)
+        }
+    }
+}
+
+struct LandingWorkView: View {
+    @ObservedObject var model = ListCollection()
+    @State private var showAddList = false
+    var body: some View{
+        NavigationStack{
+            List{
+                Section {
+                    
+                } header: {
+                    Text("Pinned")
+                }.headerProminence(.increased)
+
+                Section {
+                    ForEach(model.lists){ worklist in
+                        NavigationLink {
+                            WorklistView(worklist: worklist)
+                        } label: {
+                            LandingWorklistRowView(worklist: worklist)
+                        }
+                    }
+                } header: {
+                    Text("My lists")
+                }.headerProminence(.increased)
+
+            }
+            .toolbar{
+                Button(action: {showAddList.toggle()}, label: {Image(systemName: "plus")})
+                    .sheet(isPresented: $showAddList) {
+                        NewWorklistEditorView(worklistContainer: model)
+                    }
+                Menu {
+                    Button(action: {}, label: {Text("test")})
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                }
+            }
+        }
+    }
+    private func addRow(){
+        
+    }
+}
+
 struct WorkcardView_Previews: PreviewProvider {
     static var previews: some View {
         WorkcardView()
         WorkcardView().preferredColorScheme(.dark)
+        WorklistView()
+        ExistingWorklistEditorView(worklist: Binding(projectedValue: .constant(WorkList())))
+    }
+}
+struct LandingWorkView_Previews: PreviewProvider {
+    static var previews: some View{
+        LandingWorkView()
     }
 }
