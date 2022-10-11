@@ -13,6 +13,8 @@ struct KarlaImages {
     static var worklistRound = "list.bullet.circle.fill"
 }
 
+// MARK: - DATA OBJECTS
+
 struct Patient: Identifiable, Hashable {
     var id = UUID()
     var name: String = "Missing name"
@@ -60,6 +62,9 @@ struct WorkList: Identifiable, Hashable {
     var workCards: [UUID] = []
     var listIcon = KarlaImages.worklistRound
 }
+
+
+// MARK: - VIEWS
 
 struct WorklistView: View {
     
@@ -783,6 +788,7 @@ class WorkCardModel: ObservableObject, Identifiable {
 }
 
 class PatientModel: ObservableObject {
+    
     @Published var patient: Patient
     init(patient: Patient){
         self.patient = patient
