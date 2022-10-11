@@ -13,7 +13,7 @@ struct KarlaImages {
     static var worklistRound = "list.bullet.circle.fill"
 }
 
-struct Patient: Identifiable {
+struct Patient: Identifiable, Hashable {
     var id = UUID()
     var name: String = "Missing name"
     var dateOfBirth = Date()
@@ -23,7 +23,7 @@ struct Patient: Identifiable {
     var ramqNumber = ""
 }
 
-struct Visit {
+struct Visit: Hashable {
     var date = Date()
     var patient: Patient? = nil
     var diagnosis: Diagnosis? = nil
@@ -40,7 +40,7 @@ struct Diagnosis: Identifiable, Hashable {
     }
 }
 
-struct WorkCard: Identifiable, Diagnosed {
+struct WorkCard: Identifiable, Hashable {
     var id = UUID()
     var patient: Patient = Patient()
     var primaryDiagnosis: Diagnosis = Diagnosis()
@@ -49,21 +49,21 @@ struct WorkCard: Identifiable, Diagnosed {
     var cardFlagged = false
     var status: CardStatus = .active
     var room: String = ""
-    var workList: WorklistModel? = nil
+    var worklistId: UUID? = nil
+//    var workList: WorklistModel? = nil
 }
 
-struct WorkListData {
+struct WorkList: Identifiable, Hashable {
+    var id = UUID()
     var name: String = ""
     var dateCreatetd: Date?
-    var workCards: [WorkCardModel] = []
+    var workCards: [UUID] = []
     var listIcon = KarlaImages.worklistRound
 }
 
 struct WorklistView: View {
     
     // MARK: - Local variables
-    @State private var multiSelection = Set<UUID>()
-    @State private var cardsPath: [WorkCard] = []
     @State private var showWorkCard = false
     @State private var showNewWorkCard = false
     
@@ -94,7 +94,7 @@ struct WorklistView: View {
             .sheet(isPresented: $showWorkCard, content: {
                 WorkcardView()
             })
-            .navigationTitle(worklist.name.isEmpty ? "Worklist" : worklist.name)
+            .navigationTitle(worklist.worklistData.name.isEmpty ? "Worklist" : worklist.worklistData.name)
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 Button(action: {showNewWorkCard.toggle()}) {
@@ -167,10 +167,9 @@ struct NewWorklistEditorView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done", action: {
-                        worklistContainer.lists.append(newList)
+                        worklistContainer.lists.append(WorklistModel(from: newList))
                         dismiss()
-                        worklistContainer.editedList = WorkList()
-                    }).disabled(worklistContainer.editedList.name.isEmpty)
+                    }).disabled(newList.name.isEmpty)
                 }
             }
         }
@@ -264,10 +263,9 @@ struct WorklistRowView: View {
                 
                 // Patient name and chart number
                 HStack{
-                    TextField("Full name", text: $workcard.patient.name)
+                    TextField("Full name", text: $workcard.content.patient.name)
                         .lineLimit(1)
                         .focused($focusedField)
-//                    Text(workcard.patient.name).lineLimit(1)
                     Spacer()
                     Text("#34232").foregroundColor(.secondary).font(.footnote)
                 }
@@ -275,18 +273,17 @@ struct WorklistRowView: View {
                 // diagnosis label and room number
                 HStack{
                     Text("Dx")
-                    TextField("Primary diagnosis", text: $workcard.primaryDiagnosis.name)
+                    TextField("Primary diagnosis", text: $workcard.content.primaryDiagnosis.name)
                         .focused($focusedField)
 //                        .fixedSize()
 //                    Text(workcard.primaryDiagnosis?.name ?? "No primary diagnosis")
                         .lineLimit(2)
                     Spacer()
-                    TextField("Room", text: $workcard.room)
+                    TextField("Room", text: $workcard.content.room)
                         .frame(width: 55)
 //                        .fixedSize()
                         .focused($focusedField)
                         .multilineTextAlignment(.trailing)
-//                    Text("234")
                 }.foregroundColor(.secondary).font(.callout)
             }
         }
@@ -310,6 +307,16 @@ struct WorkcardView: View {
     @State private var patientCardVisible = false
     @State private var showDateAdmitted = false
     @State private var workcard: WorkCard = WorkCard()
+    private var workList: WorklistModel? = nil
+    
+    init(addToWorklist: WorklistModel){
+        self.workList = addToWorklist
+        self.workcard.worklistId = addToWorklist.id
+    }
+    
+    init(){
+        
+    }
     
     var body: some View {
         NavigationStack{
@@ -361,20 +368,6 @@ struct WorkcardView: View {
                         }
                         .foregroundColor(.secondary)
                         .font(.callout)
-
-//                        HStack{
-//                            Spacer()
-//                            VStack(alignment: .trailing){
-//                                HStack{
-//                                    Text("Chart #: ")
-//                                    Text(workcard.patient.chartNumber.isEmpty ? "None" : workcard.patient.chartNumber).foregroundColor(.secondary).fontWeight(.light)
-//                                }
-//                                HStack{
-//                                    Text("RAMQ #: ")
-//                                    Text(workcard.patient.ramqNumber.isEmpty ? "None" : workcard.patient.ramqNumber).foregroundColor(.secondary).fontWeight(.light)
-//                                }
-//                            }.foregroundColor(.secondary).font(.subheadline)
-//                        }
                     }
                 }
                 
@@ -470,7 +463,6 @@ struct WorkcardView: View {
                 } footer: {
                     Text("When is the card next expected to be seen")
                 }
-
                 
                 //Card status section
                 Section{
@@ -493,16 +485,24 @@ struct WorkcardView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(role: .cancel, action: {dismiss()}) {
-                        Text("Cancel")
+                    Button("Cancel", role: .cancel) {
+                        //remove association with list
+                        workcard.worklistId = nil
+                        // do not save
+                        //dismiss
+                        dismiss()
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(action: {}) {
-                        Text("Done")
-                    }
+                    Button("Done") {
+                        //save card to database
+                        workList?.workCards.append(WorkCardModel())
+                        //dismiss view
+                        dismiss()
+                    }.disabled(workcard.patient.name.isEmpty || workcard.patient.chartNumber.isEmpty)
                 }
             }
+            .interactiveDismissDisabled()
         }
     }
 }
@@ -641,7 +641,7 @@ struct PatientCardView: View {
 }
 
 struct LandingWorklistRowView: View {
-    var worklist: WorklistModel
+    var worklist: WorkList
     var body: some View{
         HStack{
             //Image
@@ -658,7 +658,11 @@ struct LandingWorklistRowView: View {
 }
 
 struct LandingWorkView: View {
+    
+    @EnvironmentObject private var dataManager: DataManager
+    
     @ObservedObject var model = LandingDeckModel()
+    
     @State private var showAddList = false
     var body: some View{
         NavigationStack{
@@ -670,11 +674,11 @@ struct LandingWorkView: View {
                 }.headerProminence(.increased)
 
                 Section {
-                    ForEach(model.lists){ worklist in
+                    ForEach(Array(dataManager.listsDatabase)){ worklist in
                         NavigationLink {
                             WorklistView(worklist: worklist)
                         } label: {
-                            LandingWorklistRowView(worklist: worklist)
+//                            LandingWorklistRowView(worklist: worklist.worklistData)
                         }
                     }
                 } header: {
@@ -695,36 +699,40 @@ struct LandingWorkView: View {
             }
         }
     }
-    private func addRow(){
-        
-    }
 }
 
 // MARK: - PERSISTENCE LAYER
 
 // Landing view model
 class ListDeck: ObservableObject {
-    @Published var deck: [WorkList] = []
+    @Published var deck: [WorklistModel] = []
     init(){
         self.deck = getDefaultLists()
     }
     // Get default lists
-    private func getDefaultLists() -> [WorkList]{
+    private func getDefaultLists() -> [WorklistModel]{
         return []
     }
 }
 
-// WorklistView model
+// Worklist model
 class WorklistModel: ObservableObject, Identifiable {
     
     // identifier
     var id = UUID()
     
     // object data
-    @Published var worklistData = WorkListData()
+    @Published var worklistData = WorkList()
     
     // object relationships
     @Published var workCards: [WorkCardModel] = []
+    
+    init(from worklist: WorkList){
+        self.worklistData = worklist
+    }
+    init(){
+        
+    }
     
     // MARK: Intents
     // Add card to list
@@ -738,8 +746,8 @@ class WorklistModel: ObservableObject, Identifiable {
     }
     // Create card
     func getNewWorkCard() -> WorkCardModel {
-        var newCard = WorkCardModel()
-        newCard.workList = self
+        let newCard = WorkCardModel()
+        newCard.content.worklistId = self.id
         self.add(newCard)
         return newCard
     }
@@ -756,14 +764,22 @@ class WorklistModel: ObservableObject, Identifiable {
 
 class WorkCardModel: ObservableObject, Identifiable {
     var id = UUID()
-    @Published var patient: Patient = Patient()
-    @Published var primaryDiagnosis: Diagnosis = Diagnosis()
-    @Published var diagnosisList: [Diagnosis] = []
-    @Published var visits: [Visit] = []
-    @Published var cardFlagged = false
-    @Published var status: CardStatus = .active
-    @Published var room: String = ""
-    @Published var workList: WorklistModel? = nil
+    @Published var content = WorkCard()
+//    @Published var patient: Patient = Patient()
+//    @Published var primaryDiagnosis: Diagnosis = Diagnosis()
+//    @Published var diagnosisList: [Diagnosis] = []
+//    @Published var visits: [Visit] = []
+//    @Published var cardFlagged = false
+//    @Published var status: CardStatus = .active
+//    @Published var room: String = ""
+//    @Published var workList: WorklistModel? = nil
+    
+    init(){
+        
+    }
+    init(from workcard: WorkCard){
+        self.content = workcard
+    }
 }
 
 class PatientModel: ObservableObject {
@@ -781,6 +797,24 @@ class LandingDeckModel: ObservableObject {
     }
 }
 
+class DataManager: ObservableObject {
+    @Published var listsDatabase: Set<WorkList>
+    @Published var patientsDatabase: Set<Patient>
+    @Published var cardsDatabase: Set<WorkCard>
+    init(){
+        // for now initializing empty Set
+        self.listsDatabase = []
+        self.patientsDatabase = []
+        self.cardsDatabase = []
+    }
+    
+    func addNewList(worklist: WorkList){
+        listsDatabase.insert(worklist)
+    }
+    func removeList(worklist: WorkList){
+        listsDatabase.remove(worklist)
+    }
+}
 
 // ---
 
@@ -794,7 +828,9 @@ struct WorkcardView_Previews: PreviewProvider {
     }
 }
 struct LandingWorkView_Previews: PreviewProvider {
+    static let dataManager = DataManager()
     static var previews: some View{
         LandingWorkView()
+            .environmentObject(dataManager)
     }
 }

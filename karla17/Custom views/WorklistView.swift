@@ -8,10 +8,10 @@
 import SwiftUI
 
 
-
-struct WorklistView_Previews: PreviewProvider {
-    static var previews: some View {
-        WorklistView(worklist: WorkList())
-        WorklistView(worklist: WorkList()).preferredColorScheme(.dark)
-    }
-}
+//
+//struct WorklistView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WorklistView(worklist: WorklistModel())
+//        WorklistView(worklist: WorklistModel()).preferredColorScheme(.dark)
+//    }
+//}
