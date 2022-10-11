@@ -49,13 +49,13 @@ struct WorkCard: Identifiable, Diagnosed {
     var cardFlagged = false
     var status: CardStatus = .active
     var room: String = ""
+    var workList: WorklistModel? = nil
 }
 
-struct WorkList: Identifiable {
-    var id = UUID()
+struct WorkListData {
     var name: String = ""
     var dateCreatetd: Date?
-    var workCards: [WorkCard] = [WorkCard(), WorkCard()]
+    var workCards: [WorkCardModel] = []
     var listIcon = KarlaImages.worklistRound
 }
 
@@ -69,12 +69,9 @@ struct WorklistView: View {
     
     // MARK: - MODEL
     //var worklist: WorkList
-    @ObservedObject var model = WorklistModel()
-    init(worklist: WorkList){
-        self.model.worklist = worklist
-    }
-    init(){
-        
+    @ObservedObject var worklist: WorklistModel
+    init(worklist: WorklistModel){
+        self.worklist = worklist
     }
     
     // MARK: - BODY
@@ -89,7 +86,7 @@ struct WorklistView: View {
                         Button("Inactive", action: {})
                     }.buttonStyle(.bordered).buttonBorderShape(.capsule).font(.footnote)
                 }
-                ForEach(model.worklist.workCards){ card in
+                ForEach(worklist.workCards){ card in
                     WorklistRowView(workcard: card)
                 }
             }
@@ -97,7 +94,7 @@ struct WorklistView: View {
             .sheet(isPresented: $showWorkCard, content: {
                 WorkcardView()
             })
-            .navigationTitle(model.worklist.name.isEmpty ? "Worklist" : model.worklist.name)
+            .navigationTitle(worklist.name.isEmpty ? "Worklist" : worklist.name)
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 Button(action: {showNewWorkCard.toggle()}) {
@@ -132,8 +129,9 @@ struct WorklistView: View {
 }
 
 struct NewWorklistEditorView: View {
-    @ObservedObject var worklistContainer: ListCollection
+    @ObservedObject var worklistContainer: LandingDeckModel
     @Environment(\.dismiss) var dismiss
+    @State var newList = WorkList()
     
     let columns = [GridItem(.fixed(30))]
     
@@ -142,12 +140,12 @@ struct NewWorklistEditorView: View {
             Form {
                 // List name and large icon
                 VStack{
-                    Image(systemName: worklistContainer.editedList.listIcon)
+                    Image(systemName: newList.listIcon)
                         .resizable()
                         .scaledToFit()
                         .foregroundColor(.blue)
                         .padding(.top)
-                    TextField("List Name", text: $worklistContainer.editedList.name)
+                    TextField("List Name", text: $newList.name)
                         .font(.title)
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
@@ -169,14 +167,13 @@ struct NewWorklistEditorView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done", action: {
-                        worklistContainer.lists.append(worklistContainer.editedList)
+                        worklistContainer.lists.append(newList)
                         dismiss()
                         worklistContainer.editedList = WorkList()
                     }).disabled(worklistContainer.editedList.name.isEmpty)
                 }
             }
         }
-        
     }
 }
 
@@ -235,7 +232,7 @@ struct ExistingWorklistEditorView: View {
 
 struct WorklistRowView: View {
     
-    @State var workcard: WorkCard
+    @ObservedObject var workcard: WorkCardModel
     @FocusState private var focusedField: Bool
     @State private var showFullWorkcard = false
     
@@ -643,49 +640,8 @@ struct PatientCardView: View {
     }
 }
 
-// MARK: - PERSISTENCE LAYER
-
-// Landing view model
-class ListDeck: ObservableObject {
-    @Published var deck: [WorkList] = []
-    init(){
-        self.deck = getDefaultLists()
-    }
-    // Get default lists
-    private func getDefaultLists() -> [WorkList]{
-        return []
-    }
-}
-
-// WorklistView model
-class WorklistModel: ObservableObject {
-    @Published var worklist: WorkList = WorkList()
-    
-    // Save list
-    // Create card
-    // Read/get gard
-    // Update card
-    // Delete card
-    
-}
-
-class WorkCardModel: ObservableObject {
-    
-}
-
-class ListCollection: ObservableObject {
-    @Published var lists: [WorkList] = []
-    @Published var editedList = WorkList()
-    func addNewList(){
-        let newList = WorkList()
-        lists.append(newList)
-    }
-}
-
-
-// ---
 struct LandingWorklistRowView: View {
-    var worklist: WorkList
+    var worklist: WorklistModel
     var body: some View{
         HStack{
             //Image
@@ -702,7 +658,7 @@ struct LandingWorklistRowView: View {
 }
 
 struct LandingWorkView: View {
-    @ObservedObject var model = ListCollection()
+    @ObservedObject var model = LandingDeckModel()
     @State private var showAddList = false
     var body: some View{
         NavigationStack{
@@ -744,11 +700,96 @@ struct LandingWorkView: View {
     }
 }
 
+// MARK: - PERSISTENCE LAYER
+
+// Landing view model
+class ListDeck: ObservableObject {
+    @Published var deck: [WorkList] = []
+    init(){
+        self.deck = getDefaultLists()
+    }
+    // Get default lists
+    private func getDefaultLists() -> [WorkList]{
+        return []
+    }
+}
+
+// WorklistView model
+class WorklistModel: ObservableObject, Identifiable {
+    
+    // identifier
+    var id = UUID()
+    
+    // object data
+    @Published var worklistData = WorkListData()
+    
+    // object relationships
+    @Published var workCards: [WorkCardModel] = []
+    
+    // MARK: Intents
+    // Add card to list
+    func add(_ workCard: WorkCardModel) -> Void {
+        self.workCards.append(workCard)
+        self.saveWorkList()
+    }
+    // Save list
+    func saveWorkList(){
+        
+    }
+    // Create card
+    func getNewWorkCard() -> WorkCardModel {
+        var newCard = WorkCardModel()
+        newCard.workList = self
+        self.add(newCard)
+        return newCard
+    }
+    // Read/get gard
+    // Update card
+    // Delete card
+    func delete(_ workCard: WorkCard) -> Void {
+        self.workCards.removeAll { card in
+            card.id == workCard.id
+        }
+        saveWorkList()
+    }
+}
+
+class WorkCardModel: ObservableObject, Identifiable {
+    var id = UUID()
+    @Published var patient: Patient = Patient()
+    @Published var primaryDiagnosis: Diagnosis = Diagnosis()
+    @Published var diagnosisList: [Diagnosis] = []
+    @Published var visits: [Visit] = []
+    @Published var cardFlagged = false
+    @Published var status: CardStatus = .active
+    @Published var room: String = ""
+    @Published var workList: WorklistModel? = nil
+}
+
+class PatientModel: ObservableObject {
+    @Published var patient: Patient
+    init(patient: Patient){
+        self.patient = patient
+    }
+}
+
+class LandingDeckModel: ObservableObject {
+    @Published var lists: [WorklistModel] = []
+    func addNewList(){
+        let newList = WorklistModel()
+        lists.append(newList)
+    }
+}
+
+
+// ---
+
+
 struct WorkcardView_Previews: PreviewProvider {
     static var previews: some View {
         WorkcardView()
         WorkcardView().preferredColorScheme(.dark)
-        WorklistView()
+        WorklistView(worklist: WorklistModel())
         ExistingWorklistEditorView(worklist: Binding(projectedValue: .constant(WorkList())))
     }
 }
