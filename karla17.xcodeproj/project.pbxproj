@@ -17,11 +17,8 @@
 		316EC92928F20EC2002FCFF8 /* karla17UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC92828F20EC2002FCFF8 /* karla17UITests.swift */; };
 		316EC92B28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC92A28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift */; };
 		316EC93C28F2DB13002FCFF8 /* PatientCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC93B28F2DB13002FCFF8 /* PatientCardView.swift */; };
-		31EC1D7D28F503C70026BD60 /* DiagnosisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D7C28F503C70026BD60 /* DiagnosisView.swift */; };
 		31EC1D7F28F504780026BD60 /* Diagnosis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D7E28F504780026BD60 /* Diagnosis.swift */; };
 		31EC1D8128F504D10026BD60 /* CustomProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D8028F504D10026BD60 /* CustomProtocols.swift */; };
-		31EC1D8328F506260026BD60 /* WorklistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D8228F506260026BD60 /* WorklistView.swift */; };
-		31EC1D8528F506760026BD60 /* DiagnosisSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D8428F506760026BD60 /* DiagnosisSelectionView.swift */; };
 		31EC1D8728F506FE0026BD60 /* Custom Modifiers and enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D8628F506FE0026BD60 /* Custom Modifiers and enums.swift */; };
 /* End PBXBuildFile section */
 
@@ -57,11 +54,8 @@
 		316EC92828F20EC2002FCFF8 /* karla17UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = karla17UITests.swift; sourceTree = "<group>"; };
 		316EC92A28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = karla17UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		316EC93B28F2DB13002FCFF8 /* PatientCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientCardView.swift; sourceTree = "<group>"; };
-		31EC1D7C28F503C70026BD60 /* DiagnosisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosisView.swift; sourceTree = "<group>"; };
 		31EC1D7E28F504780026BD60 /* Diagnosis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnosis.swift; sourceTree = "<group>"; };
 		31EC1D8028F504D10026BD60 /* CustomProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProtocols.swift; sourceTree = "<group>"; };
-		31EC1D8228F506260026BD60 /* WorklistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorklistView.swift; sourceTree = "<group>"; };
-		31EC1D8428F506760026BD60 /* DiagnosisSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosisSelectionView.swift; sourceTree = "<group>"; };
 		31EC1D8628F506FE0026BD60 /* Custom Modifiers and enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom Modifiers and enums.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -165,9 +159,6 @@
 		31EC1D8928F507590026BD60 /* Custom views */ = {
 			isa = PBXGroup;
 			children = (
-				31EC1D8228F506260026BD60 /* WorklistView.swift */,
-				31EC1D8428F506760026BD60 /* DiagnosisSelectionView.swift */,
-				31EC1D7C28F503C70026BD60 /* DiagnosisView.swift */,
 			);
 			path = "Custom views";
 			sourceTree = "<group>";
@@ -303,16 +294,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				316EC90D28F20EC1002FCFF8 /* karla17.xcdatamodeld in Sources */,
-				31EC1D8528F506760026BD60 /* DiagnosisSelectionView.swift in Sources */,
 				316EC90828F20EC1002FCFF8 /* karla17App.swift in Sources */,
 				316EC93C28F2DB13002FCFF8 /* PatientCardView.swift in Sources */,
 				31EC1D8128F504D10026BD60 /* CustomProtocols.swift in Sources */,
 				31EC1D7F28F504780026BD60 /* Diagnosis.swift in Sources */,
 				31EC1D8728F506FE0026BD60 /* Custom Modifiers and enums.swift in Sources */,
-				31EC1D7D28F503C70026BD60 /* DiagnosisView.swift in Sources */,
 				316EC90F28F20EC1002FCFF8 /* ContentView.swift in Sources */,
 				316EC90A28F20EC1002FCFF8 /* Persistence.swift in Sources */,
-				31EC1D8328F506260026BD60 /* WorklistView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

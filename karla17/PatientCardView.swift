@@ -61,6 +61,7 @@ struct WorkList: Identifiable, Hashable {
     var dateCreatetd: Date?
     var workCards: [WorkCard] = []
     var listIcon = KarlaImages.worklistRound
+    var isPinned = false
 }
 
 
