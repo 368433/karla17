@@ -99,7 +99,8 @@ struct WorklistView: View {
             .listStyle(.plain)
             .sheet(isPresented: $showWorkCard, content: {
                 WorkcardView()
-            }).presentationDragIndicator(.visible)
+            })//.presentationDragIndicator(.visible)
+            
             .navigationTitle(worklist.name.isEmpty ? "Worklist" : worklist.name)
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
@@ -127,9 +128,11 @@ struct WorklistView: View {
                     Image(systemName: "ellipsis.circle")
                 }
             }
-            .sheet(isPresented: $showNewWorkCard, content: {
+            .sheet(isPresented: $showNewWorkCard) {
                 WorkcardView()
-            })
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.visible)
+            }
         }
     }
 }
