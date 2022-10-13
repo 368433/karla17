@@ -17,7 +17,6 @@
 		316EC92928F20EC2002FCFF8 /* karla17UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC92828F20EC2002FCFF8 /* karla17UITests.swift */; };
 		316EC92B28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC92A28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift */; };
 		316EC93C28F2DB13002FCFF8 /* PatientCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC93B28F2DB13002FCFF8 /* PatientCardView.swift */; };
-		31EC1D7F28F504780026BD60 /* Diagnosis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D7E28F504780026BD60 /* Diagnosis.swift */; };
 		31EC1D8128F504D10026BD60 /* CustomProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D8028F504D10026BD60 /* CustomProtocols.swift */; };
 		31EC1D8728F506FE0026BD60 /* Custom Modifiers and enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D8628F506FE0026BD60 /* Custom Modifiers and enums.swift */; };
 /* End PBXBuildFile section */
@@ -54,7 +53,6 @@
 		316EC92828F20EC2002FCFF8 /* karla17UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = karla17UITests.swift; sourceTree = "<group>"; };
 		316EC92A28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = karla17UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		316EC93B28F2DB13002FCFF8 /* PatientCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientCardView.swift; sourceTree = "<group>"; };
-		31EC1D7E28F504780026BD60 /* Diagnosis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnosis.swift; sourceTree = "<group>"; };
 		31EC1D8028F504D10026BD60 /* CustomProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProtocols.swift; sourceTree = "<group>"; };
 		31EC1D8628F506FE0026BD60 /* Custom Modifiers and enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom Modifiers and enums.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,10 +109,7 @@
 				316EC90928F20EC1002FCFF8 /* Persistence.swift */,
 				316EC90E28F20EC1002FCFF8 /* ContentView.swift */,
 				316EC93B28F2DB13002FCFF8 /* PatientCardView.swift */,
-				31EC1D8028F504D10026BD60 /* CustomProtocols.swift */,
-				31EC1D8628F506FE0026BD60 /* Custom Modifiers and enums.swift */,
-				31EC1D8828F507220026BD60 /* Custom Models */,
-				31EC1D8928F507590026BD60 /* Custom views */,
+				31EC1D8928F507590026BD60 /* Custom files */,
 				316EC91028F20EC2002FCFF8 /* Assets.xcassets */,
 				316EC91228F20EC2002FCFF8 /* karla17.entitlements */,
 				316EC90B28F20EC1002FCFF8 /* karla17.xcdatamodeld */,
@@ -148,19 +143,13 @@
 			path = karla17UITests;
 			sourceTree = "<group>";
 		};
-		31EC1D8828F507220026BD60 /* Custom Models */ = {
+		31EC1D8928F507590026BD60 /* Custom files */ = {
 			isa = PBXGroup;
 			children = (
-				31EC1D7E28F504780026BD60 /* Diagnosis.swift */,
+				31EC1D8028F504D10026BD60 /* CustomProtocols.swift */,
+				31EC1D8628F506FE0026BD60 /* Custom Modifiers and enums.swift */,
 			);
-			path = "Custom Models";
-			sourceTree = "<group>";
-		};
-		31EC1D8928F507590026BD60 /* Custom views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Custom views";
+			path = "Custom files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,7 +286,6 @@
 				316EC90828F20EC1002FCFF8 /* karla17App.swift in Sources */,
 				316EC93C28F2DB13002FCFF8 /* PatientCardView.swift in Sources */,
 				31EC1D8128F504D10026BD60 /* CustomProtocols.swift in Sources */,
-				31EC1D7F28F504780026BD60 /* Diagnosis.swift in Sources */,
 				31EC1D8728F506FE0026BD60 /* Custom Modifiers and enums.swift in Sources */,
 				316EC90F28F20EC1002FCFF8 /* ContentView.swift in Sources */,
 				316EC90A28F20EC1002FCFF8 /* Persistence.swift in Sources */,
