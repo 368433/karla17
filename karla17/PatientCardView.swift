@@ -130,8 +130,6 @@ struct WorklistView: View {
             }
             .sheet(isPresented: $showNewWorkCard) {
                 WorkcardView()
-                    .presentationDetents([.large])
-                    .presentationDragIndicator(.visible)
             }
         }
     }
@@ -664,6 +662,25 @@ struct LandingWorklistRowView: View {
             //Card count
             Text("\(worklist.workCards.count)").foregroundColor(.secondary)
         }
+    }
+}
+
+class ListManager: ObservableObject {
+    @Published var workLists: Set<WorkList> = []
+    
+    init(){
+        self.workLists = loadLists() // load them from memory
+    }
+    
+    private func loadLists() -> Set<WorkList> {
+        return []
+    }
+    
+    func addNewList(worklist: WorkList){
+        workLists.insert(worklist)
+    }
+    func removeList(worklist: WorkList){
+        workLists.remove(worklist)
     }
 }
 
