@@ -59,7 +59,7 @@ struct WorkList: Identifiable, Hashable {
     var id = UUID()
     var name: String = ""
     var dateCreatetd: Date?
-    var workCards: [UUID] = []
+    var workCards: [WorkCard] = []
     var listIcon = KarlaImages.worklistRound
 }
 
@@ -73,11 +73,11 @@ struct WorklistView: View {
     @State private var showNewWorkCard = false
     
     // MARK: - MODEL
-    //var worklist: WorkList
-    @ObservedObject var worklist: WorklistModel
-    init(worklist: WorklistModel){
-        self.worklist = worklist
-    }
+    var worklist: WorkList
+//    @ObservedObject var worklist: WorklistModel
+//    init(worklist: WorklistModel){
+//        self.worklist = worklist
+//    }
     
     // MARK: - BODY
     var body: some View{
@@ -92,14 +92,14 @@ struct WorklistView: View {
                     }.buttonStyle(.bordered).buttonBorderShape(.capsule).font(.footnote)
                 }
                 ForEach(worklist.workCards){ card in
-                    WorklistRowView(workcard: card)
+                    WorklistRowView(workCard: card)
                 }
             }
             .listStyle(.plain)
             .sheet(isPresented: $showWorkCard, content: {
                 WorkcardView()
-            })
-            .navigationTitle(worklist.worklistData.name.isEmpty ? "Worklist" : worklist.worklistData.name)
+            }).presentationDragIndicator(.visible)
+            .navigationTitle(worklist.name.isEmpty ? "Worklist" : worklist.name)
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 Button(action: {showNewWorkCard.toggle()}) {
@@ -236,7 +236,8 @@ struct ExistingWorklistEditorView: View {
 
 struct WorklistRowView: View {
     
-    @ObservedObject var workcard: WorkCardModel
+//    @ObservedObject var workcard: WorkCardModel
+    @State var workCard: WorkCard
     @FocusState private var focusedField: Bool
     @State private var showFullWorkcard = false
     
@@ -268,7 +269,7 @@ struct WorklistRowView: View {
                 
                 // Patient name and chart number
                 HStack{
-                    TextField("Full name", text: $workcard.content.patient.name)
+                    TextField("Full name", text: $workCard.patient.name)
                         .lineLimit(1)
                         .focused($focusedField)
                     Spacer()
@@ -278,13 +279,13 @@ struct WorklistRowView: View {
                 // diagnosis label and room number
                 HStack{
                     Text("Dx")
-                    TextField("Primary diagnosis", text: $workcard.content.primaryDiagnosis.name)
+                    TextField("Primary diagnosis", text: $workCard.primaryDiagnosis.name)
                         .focused($focusedField)
 //                        .fixedSize()
 //                    Text(workcard.primaryDiagnosis?.name ?? "No primary diagnosis")
                         .lineLimit(2)
                     Spacer()
-                    TextField("Room", text: $workcard.content.room)
+                    TextField("Room", text: $workCard.room)
                         .frame(width: 55)
 //                        .fixedSize()
                         .focused($focusedField)
@@ -829,7 +830,7 @@ struct WorkcardView_Previews: PreviewProvider {
     static var previews: some View {
         WorkcardView()
         WorkcardView().preferredColorScheme(.dark)
-        WorklistView(worklist: WorklistModel())
+        WorklistView(worklist: WorkList())
         ExistingWorklistEditorView(worklist: Binding(projectedValue: .constant(WorkList())))
     }
 }
