@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct KarlaImages {
     static var workcard = "note.text"
@@ -15,23 +16,23 @@ struct KarlaImages {
 
 // MARK: - DATA OBJECTS
 
-struct Patient: Identifiable, Hashable {
-    var id = UUID()
-    var name: String = "Missing name"
-    var dateOfBirth = Date()
-    var postalCode = ""
-    var phoneNumber = ""
-    var chartNumber = ""
-    var ramqNumber = ""
-}
+//struct Patient: Identifiable, Hashable {
+//    var id = UUID()
+//    var name: String = "Missing name"
+//    var dateOfBirth = Date()
+//    var postalCode = ""
+//    var phoneNumber = ""
+//    var chartNumber = ""
+//    var ramqNumber = ""
+//}
 
-struct Visit: Hashable {
-    var date = Date()
-    var patient: Patient? = nil
-    var diagnosis: Diagnosis? = nil
-}
+//struct Visit: Hashable {
+//    var date = Date()
+//    var patient: Patient? = nil
+//    var diagnosis: DiagnosisStruct? = nil
+//}
 
-struct Diagnosis: Identifiable, Hashable {
+struct DiagnosisStruct: Identifiable, Hashable {
     var id: String
     var name = ""
     var icdCode = "000"
@@ -42,27 +43,28 @@ struct Diagnosis: Identifiable, Hashable {
     }
 }
 
-struct WorkCard: Identifiable, Hashable {
-    var id = UUID()
-    var patient: Patient = Patient()
-    var primaryDiagnosis: Diagnosis = Diagnosis()
-    var diagnosisList: [Diagnosis] = []
-    var visits: [Visit] = []
-    var cardFlagged = false
-    var status: CardStatus = .active
-    var room: String = ""
-    var worklistId: UUID? = nil
-//    var workList: WorklistModel? = nil
-}
+//struct WorkCard: Identifiable, Hashable {
+//    var id = UUID()
+//    var patient: Patient = Patient()
+//    var primaryDiagnosis: DiagnosisStruct = DiagnosisStruct()
+//    var diagnosisList: [DiagnosisStruct] = []
+//    var visits: [Visit] = []
+//    var cardFlagged = false
+//    var status: CardStatus = .active
+//    var room: String = ""
+//    var worklistId: UUID? = nil
+////    var workList: WorklistModel? = nil
+//}
 
-struct WorkList: Identifiable, Hashable {
-    var id = UUID()
-    var name: String = ""
-    var dateCreatetd: Date?
-    var workCards: [WorkCard] = []
-    var listIcon = KarlaImages.worklistRound
-    var isPinned = false
-}
+//struct WorkList: Identifiable, Hashable {
+//    var id = UUID()
+//    var name: String = ""
+//    var dateCreatetd: Date?
+//    var workCards: [WorkCard] = []
+//    var listIcon = KarlaImages.worklistRound
+//    var isPinned = false
+//}
+
 
 
 // MARK: - VIEWS
@@ -72,13 +74,10 @@ struct WorklistView: View {
     // MARK: - Local variables
     @State private var showWorkCard = false
     @State private var showNewWorkCard = false
+    @State private var searchQuery =  ""
     
     // MARK: - MODEL
-    var worklist: WorkList
-//    @ObservedObject var worklist: WorklistModel
-//    init(worklist: WorklistModel){
-//        self.worklist = worklist
-//    }
+    var worklist: Worklist
     
     // MARK: - BODY
     var body: some View{
@@ -92,11 +91,12 @@ struct WorklistView: View {
                         Button("Inactive", action: {})
                     }.buttonStyle(.bordered).buttonBorderShape(.capsule).font(.footnote)
                 }
-                ForEach(worklist.workCards){ card in
+                ForEach(worklist.workcards){ card in
                     WorklistRowView(workCard: card)
                 }
             }
             .listStyle(.plain)
+            .searchable(text: $searchQuery)
             .sheet(isPresented: $showWorkCard, content: {
                 WorkcardView()
             })//.presentationDragIndicator(.visible)
@@ -135,109 +135,109 @@ struct WorklistView: View {
     }
 }
 
-struct NewWorklistEditorView: View {
-    @ObservedObject var worklistContainer: LandingDeckModel
-    @Environment(\.dismiss) var dismiss
-    @State var newList = WorkList()
-    
-    let columns = [GridItem(.fixed(30))]
-    
-    var body: some View {
-        NavigationStack{
-            Form {
-                // List name and large icon
-                VStack{
-                    Image(systemName: newList.listIcon)
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(.blue)
-                        .padding(.top)
-                    TextField("List Name", text: $newList.name)
-                        .font(.title)
-                        .fontWeight(.medium)
-                        .multilineTextAlignment(.center)
-                        .padding(.top)
-                        .textFieldStyle(.roundedBorder)
-                }.frame(height: 140)
-                
-                // Color and icon selection
-                Section{
-                    Text("Color")
-                    Text("Icon")
-                }
-            }
-            .navigationTitle("New list")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar{
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel", role: .cancel, action: {dismiss()})
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done", action: {
-                        worklistContainer.lists.append(WorklistModel(from: newList))
-                        dismiss()
-                    }).disabled(newList.name.isEmpty)
-                }
-            }
-        }
-    }
-}
+//struct NewWorklistEditorView: View {
+//    @ObservedObject var worklistContainer: LandingDeckModel
+//    @Environment(\.dismiss) var dismiss
+//    @State var newList = Worklist()
+//
+//    let columns = [GridItem(.fixed(30))]
+//
+//    var body: some View {
+//        NavigationStack{
+//            Form {
+//                // List name and large icon
+//                VStack{
+//                    Image(systemName: newList.listIcon)
+//                        .resizable()
+//                        .scaledToFit()
+//                        .foregroundColor(.blue)
+//                        .padding(.top)
+//                    TextField("List Name", text: $newList.name)
+//                        .font(.title)
+//                        .fontWeight(.medium)
+//                        .multilineTextAlignment(.center)
+//                        .padding(.top)
+//                        .textFieldStyle(.roundedBorder)
+//                }.frame(height: 140)
+//
+//                // Color and icon selection
+//                Section{
+//                    Text("Color")
+//                    Text("Icon")
+//                }
+//            }
+//            .navigationTitle("New list")
+//            .navigationBarTitleDisplayMode(.inline)
+//            .toolbar{
+//                ToolbarItem(placement: .cancellationAction) {
+//                    Button("Cancel", role: .cancel, action: {dismiss()})
+//                }
+//                ToolbarItem(placement: .confirmationAction) {
+//                    Button("Done", action: {
+//                        worklistContainer.lists.append(WorklistModel(from: newList))
+//                        dismiss()
+//                    }).disabled(newList.name.isEmpty)
+//                }
+//            }
+//        }
+//    }
+//}
 
-struct ExistingWorklistEditorView: View {
-    @Binding var worklist: WorkList
-    @Environment(\.dismiss) var dismiss
-    
-    let columns = [GridItem(.fixed(30))]
-    
-    var body: some View {
-        NavigationStack{
-            Form {
-                // List name and large icon
-                VStack{
-                    Image(systemName: worklist.listIcon)
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(.blue)
-                        .padding(.top)
-                    TextField("List Name", text: $worklist.name)
-                        .font(.title)
-                        .fontWeight(.medium)
-                        .multilineTextAlignment(.center)
-                        .padding(.top)
-                        .textFieldStyle(.roundedBorder)
-                }.frame(height: 140)
-                
-                // Color and icon selection
-                Section{
-                    Text("Color")
-                    Text("Icon")
-                }
-                
-                Section {
-                    DatePicker(selection: Binding(projectedValue: .constant(Date())), displayedComponents: .date) {
-                        Label("Date created", systemImage: "calendar")
-                    }
-                }
-            }
-            .navigationTitle("List Info")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar{
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel", role: .cancel, action: {dismiss()})
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done", action: {
-                        // TODO: Save function
-                        dismiss()
-                    }).disabled(worklist.name.isEmpty)
-                }
-            }
-        }
-    }
-}
+//struct ExistingWorklistEditorView: View {
+//    @Binding var worklist: WorkList
+//    @Environment(\.dismiss) var dismiss
+//
+//    let columns = [GridItem(.fixed(30))]
+//
+//    var body: some View {
+//        NavigationStack{
+//            Form {
+//                // List name and large icon
+//                VStack{
+//                    Image(systemName: worklist.listIcon)
+//                        .resizable()
+//                        .scaledToFit()
+//                        .foregroundColor(.blue)
+//                        .padding(.top)
+//                    TextField("List Name", text: $worklist.name)
+//                        .font(.title)
+//                        .fontWeight(.medium)
+//                        .multilineTextAlignment(.center)
+//                        .padding(.top)
+//                        .textFieldStyle(.roundedBorder)
+//                }.frame(height: 140)
+//
+//                // Color and icon selection
+//                Section{
+//                    Text("Color")
+//                    Text("Icon")
+//                }
+//
+//                Section {
+//                    DatePicker(selection: Binding(projectedValue: .constant(Date())), displayedComponents: .date) {
+//                        Label("Date created", systemImage: "calendar")
+//                    }
+//                }
+//            }
+//            .navigationTitle("List Info")
+//            .navigationBarTitleDisplayMode(.inline)
+//            .toolbar{
+//                ToolbarItem(placement: .cancellationAction) {
+//                    Button("Cancel", role: .cancel, action: {dismiss()})
+//                }
+//                ToolbarItem(placement: .confirmationAction) {
+//                    Button("Done", action: {
+//                        // TODO: Save function
+//                        dismiss()
+//                    }).disabled(worklist.name.isEmpty)
+//                }
+//            }
+//        }
+//    }
+//}
 
 struct WorklistEditorForm: View {
-    @Binding var worklist: WorkList
+    @Binding var worklist: Worklist
 
     var body: some View {
 //        NavigationStack{
@@ -270,7 +270,7 @@ struct WorklistEditorForm: View {
 }
 
 struct WorklistEditorView: View {
-    @State var worklist: WorkList
+    @State var worklist: Worklist
     var dataManager: DataManager? = nil
     @Environment(\.dismiss) var dismiss
     
@@ -307,7 +307,7 @@ struct WorklistEditorView: View {
 struct WorklistRowView: View {
     
 //    @ObservedObject var workcard: WorkCardModel
-    @State var workCard: WorkCard
+    @State var workcard: Workcard
     @FocusState private var focusedField: Bool
     @State private var showFullWorkcard = false
     
@@ -591,7 +591,7 @@ struct WorkspaceView: View {
 
 struct DiagnosisSelectionRowView: View {
     @State private var showInfo = false
-    var diagnosis: Diagnosis
+    var diagnosis: DiagnosisStruct
     var body: some View{
         HStack{
             VStack(alignment: .leading){
@@ -610,9 +610,9 @@ struct DiagnosisSelectionRowView: View {
 }
 
 struct DiagnosisSelectionView: View {
-    var availableDiagnosis: [Diagnosis] = [Diagnosis()]
-    @State var primaryDiagnosis: Diagnosis? = nil
-    @State var otherDiagnosis: Set<Diagnosis> = []
+    var availableDiagnosis: [DiagnosisStruct] = [DiagnosisStruct()]
+    @State var primaryDiagnosis: DiagnosisStruct? = nil
+    @State var otherDiagnosis: Set<DiagnosisStruct> = []
     @State private var showDiagnosisEdit = false
     
     var body: some View {
@@ -655,7 +655,7 @@ struct DiagnosisSelectionView: View {
 }
 
 struct DiagnosisView: View {
-    @State var diagnosis: Diagnosis
+    @State var diagnosis: DiagnosisStruct
     
     var body: some View {
         Form{
@@ -735,24 +735,10 @@ struct LandingWorklistRowView: View {
 }
 
 struct TestView: View {
-    @State private var searchText = ""
-    let allNames = ["Subh", "bob", "patrick"]
-    
     var body: some View {
-        NavigationStack {
-            List(filteredNames, id:\.self) { name in
-                Text(name)
-            }
-            .navigationTitle("Search")
-        }
-        .searchable(text: $searchText)
-    }
-    
-    var filteredNames: [String] {
-        if searchText.isEmpty {
-            return allNames
-        } else {
-            return allNames.filter { $0.contains(searchText)}
+        HStack{
+            Text("Name")
+            Spacer()
         }
     }
 }

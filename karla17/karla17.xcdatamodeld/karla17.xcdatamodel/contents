@@ -1,9 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="true" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Diagnosis" representedClassName="Diagnosis" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="pathology" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pathology" inverseName="diagnoses" inverseEntity="Pathology"/>
+        <relationship name="patient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Patient" inverseName="diagnoses" inverseEntity="Patient"/>
+        <relationship name="visits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Visit" inverseName="diagnoses" inverseEntity="Visit"/>
+        <relationship name="workcardPrimarydx" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Workcard" inverseName="primaryDiagnosis" inverseEntity="Workcard"/>
     </entity>
-    <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-    </elements>
+    <entity name="Pathology" representedClassName="Pathology" syncable="YES" codeGenerationType="class">
+        <attribute name="icdCode" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="diagnoses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Diagnosis" inverseName="pathology" inverseEntity="Diagnosis"/>
+    </entity>
+    <entity name="Patient" representedClassName="Patient" syncable="YES" codeGenerationType="class">
+        <attribute name="chartNumber" optional="YES" attributeType="String"/>
+        <attribute name="dateOfBirth" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String"/>
+        <attribute name="postalCode" optional="YES" attributeType="String"/>
+        <attribute name="ramqNumber" optional="YES" attributeType="String"/>
+        <relationship name="diagnoses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Diagnosis" inverseName="patient" inverseEntity="Diagnosis"/>
+        <relationship name="visits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Visit" inverseName="patient" inverseEntity="Visit"/>
+        <relationship name="workcards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Workcard" inverseName="patient" inverseEntity="Workcard"/>
+    </entity>
+    <entity name="Visit" representedClassName="Visit" syncable="YES" codeGenerationType="class">
+        <attribute name="billingCode" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <relationship name="diagnoses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Diagnosis" inverseName="visits" inverseEntity="Diagnosis"/>
+        <relationship name="patient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Patient" inverseName="visits" inverseEntity="Patient"/>
+        <relationship name="workcard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Workcard" inverseName="visits" inverseEntity="Workcard"/>
+    </entity>
+    <entity name="Workcard" representedClassName="Workcard" syncable="YES" codeGenerationType="class">
+        <attribute name="dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="patient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Patient" inverseName="workcards" inverseEntity="Patient"/>
+        <relationship name="primaryDiagnosis" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Diagnosis" inverseName="workcardPrimarydx" inverseEntity="Diagnosis"/>
+        <relationship name="visits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Visit" inverseName="workcard" inverseEntity="Visit"/>
+        <relationship name="worklist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Worklist" inverseName="workcards" inverseEntity="Worklist"/>
+    </entity>
+    <entity name="Worklist" representedClassName="Worklist" syncable="YES" codeGenerationType="class">
+        <attribute name="dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="isPinned" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="listColor" optional="YES" attributeType="String"/>
+        <attribute name="listIcon" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="workcards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Workcard" inverseName="worklist" inverseEntity="Workcard"/>
+    </entity>
 </model>
