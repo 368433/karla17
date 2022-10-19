@@ -236,6 +236,74 @@ struct ExistingWorklistEditorView: View {
     }
 }
 
+struct WorklistEditorForm: View {
+    @Binding var worklist: WorkList
+
+    var body: some View {
+//        NavigationStack{
+            Form {
+                // List name and large icon
+                VStack{
+                    Image(systemName: worklist.listIcon)
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.blue)
+                        .padding(.top)
+                    TextField("List Name", text: $worklist.name)
+                        .font(.title)
+                        .fontWeight(.medium)
+                        .multilineTextAlignment(.center)
+                        .padding(.top)
+                        .textFieldStyle(.roundedBorder)
+                }.frame(height: 140)
+                
+                // Color and icon selection
+                Section{
+                    Text("Color")
+                    Text("Icon")
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            
+//        }
+    }
+}
+
+struct WorklistEditorView: View {
+    @State var worklist: WorkList
+    var dataManager: DataManager? = nil
+    @Environment(\.dismiss) var dismiss
+    
+    init(worklist: WorkList? = nil, dataManager: DataManager? = nil){
+        self._worklist = worklist == nil ? State(initialValue: WorkList()):State(initialValue: worklist!)
+        self.dataManager = dataManager
+    }
+    
+    var body: some View {
+        NavigationStack{
+            WorklistEditorForm(worklist: $worklist)
+                .toolbar{
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancel", role: .cancel, action: {dismiss()})
+                    }
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Done", action: {
+                            // TODO: Save function
+                            save()
+                            dismiss()
+                        }).disabled(worklist.name.isEmpty)
+                    }
+                }
+                .navigationTitle("List Info")
+        }
+    }
+    private func save(){
+        if let dm = dataManager {
+            dm.addNewList(worklist: worklist)
+        }
+    }
+}
+
 struct WorklistRowView: View {
     
 //    @ObservedObject var workcard: WorkCardModel
@@ -661,9 +729,216 @@ struct LandingWorklistRowView: View {
             Spacer()
             //Card count
             Text("\(worklist.workCards.count)").foregroundColor(.secondary)
+//            Image(systemName: "chevron.right")
+        }.contentShape(Rectangle())
+    }
+}
+
+struct TestView: View {
+    @State private var searchText = ""
+    let allNames = ["Subh", "bob", "patrick"]
+    
+    var body: some View {
+        NavigationStack {
+            List(filteredNames, id:\.self) { name in
+                Text(name)
+            }
+            .navigationTitle("Search")
+        }
+        .searchable(text: $searchText)
+    }
+    
+    var filteredNames: [String] {
+        if searchText.isEmpty {
+            return allNames
+        } else {
+            return allNames.filter { $0.contains(searchText)}
         }
     }
 }
+
+struct SplitViewTest: View {
+    @EnvironmentObject private var dataManager: DataManager
+    @State private var showAddList = false
+    @State private var searchQuery = ""
+    
+    var body: some View {
+        NavigationSplitView {
+            ScrollView(.vertical){
+                VStack{
+                    DashboardPinnedLists(worklists: [WorkList(), WorkList(), WorkList()])
+                        .padding([.horizontal,.top])
+                    MainViewMyListsView()
+                        .environmentObject(dataManager)
+                }
+            }
+            .searchable(text: $searchQuery)
+            .background(Color(.systemGroupedBackground))
+            .toolbar{
+                Button(action: {showAddList.toggle()}, label: {Image(systemName: "plus")})
+                    .sheet(isPresented: $showAddList) {
+                        WorklistEditorView(dataManager: dataManager)
+                    }
+                Menu {
+                    Button(action: {}, label: {Text("test")})
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                }
+            }
+        } detail: {
+            EmptyView()
+        }
+
+    }
+}
+
+struct MainBoardScrollView: View {
+    @EnvironmentObject private var dataManager: DataManager
+    @State private var showAddList = false
+    @State private var searchQuery = ""
+    
+    var body: some View {
+        NavigationStack{
+            ScrollView(.vertical) {
+                VStack{
+                    DashboardPinnedLists(worklists: [WorkList(), WorkList(), WorkList()])
+                        .padding([.horizontal,.top])
+                    MainViewMyListsView()
+                        .environmentObject(dataManager)
+                }
+            }
+            .background(Color(.systemGroupedBackground))
+            .toolbar{
+                Button(action: {showAddList.toggle()}, label: {Image(systemName: "plus")})
+                    .sheet(isPresented: $showAddList) {
+                        WorklistEditorView(dataManager: dataManager)
+                    }
+                Menu {
+                    Button(action: {}, label: {Text("test")})
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                }
+            }
+        }.searchable(text: $searchQuery)
+    }
+}
+
+struct MainViewMyListsView: View {
+    @EnvironmentObject private var dataManager: DataManager
+
+    //List height
+    private var listHeight: CGFloat {
+        return CGFloat(dataManager.listsDatabase.count * 45) + 65.0
+    }
+    
+    var body: some View {
+        List {
+            Section {
+                ForEach(Array(dataManager.listsDatabase)){ worklist in
+                    NavigationLink {
+                        WorklistView(worklist: worklist)
+                    } label: {
+                        LandingWorklistRowView(worklist: worklist)
+                    }
+                }
+            } header: {
+                Text("My lists")
+            }.headerProminence(.increased)
+        }.frame(minHeight: listHeight)
+    }
+}
+
+struct LandingWorkView: View {
+    
+    @EnvironmentObject private var dataManager: DataManager
+//    @ObservedObject var model = LandingDeckModel()
+    @State private var showAddList = false
+    var body: some View{
+        NavigationStack{
+            VStack{
+                DashboardPinnedLists(worklists: [])
+                    .padding(.horizontal)
+                List{
+                    Section {
+                        ForEach(Array(dataManager.listsDatabase)){ worklist in
+                            NavigationLink {
+                                WorklistView(worklist: worklist)
+                            } label: {
+                                LandingWorklistRowView(worklist: worklist)
+                            }
+                        }
+                    } header: {
+                        Text("My lists")
+                    }.headerProminence(.increased)
+                }
+            }
+            .background(Color(.systemGroupedBackground))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar{
+                Button(action: {showAddList.toggle()}, label: {Image(systemName: "plus")})
+                    .sheet(isPresented: $showAddList) {
+                        WorklistEditorView(dataManager: dataManager)
+                    }
+                Menu {
+                    Button(action: {}, label: {Text("test")})
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                }
+            }
+        }
+    }
+}
+
+struct WorklistTileView: View {
+    var worklist: WorkList
+    var body: some View {
+        VStack(alignment: .leading){
+            HStack{
+                Image(systemName: "info.circle")
+                    .foregroundColor(.red)
+                Spacer()
+                Text("23")
+                    .fontWeight(.bold)
+            }.font(.title)
+            Spacer()
+            Text("Dynacare".capitalized)
+                .font(.title3)
+                .fontWeight(.medium)
+                .foregroundColor(.secondary)
+                .lineLimit(1)
+
+        }
+        .padding()
+        .background(.white)
+        .cornerRadius(15)
+        .shadow(color: Color.gray.opacity(0.3), radius: 3)
+        .frame(height: 90)
+    }
+}
+
+struct DashboardPinnedLists: View {
+    var worklists: [WorkList]
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
+    var body: some View{
+        LazyVGrid(columns: columns, spacing: 15) {
+            ForEach(worklists) { worklist in
+                NavigationLink {
+                    Text("test")
+                } label: {
+                    WorklistTileView(worklist: worklist)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+}
+
+
+// MARK: - PERSISTENCE LAYER
 
 class ListManager: ObservableObject {
     @Published var workLists: Set<WorkList> = []
@@ -683,52 +958,6 @@ class ListManager: ObservableObject {
         workLists.remove(worklist)
     }
 }
-
-struct LandingWorkView: View {
-    
-    @EnvironmentObject private var dataManager: DataManager
-    
-    @ObservedObject var model = LandingDeckModel()
-    
-    @State private var showAddList = false
-    var body: some View{
-        NavigationStack{
-            List{
-                Section {
-                    
-                } header: {
-                    Text("Pinned")
-                }.headerProminence(.increased)
-
-                Section {
-                    ForEach(Array(dataManager.listsDatabase)){ worklist in
-                        NavigationLink {
-                            WorklistView(worklist: worklist)
-                        } label: {
-//                            LandingWorklistRowView(worklist: worklist.worklistData)
-                        }
-                    }
-                } header: {
-                    Text("My lists")
-                }.headerProminence(.increased)
-
-            }
-            .toolbar{
-                Button(action: {showAddList.toggle()}, label: {Image(systemName: "plus")})
-                    .sheet(isPresented: $showAddList) {
-                        NewWorklistEditorView(worklistContainer: model)
-                    }
-                Menu {
-                    Button(action: {}, label: {Text("test")})
-                } label: {
-                    Image(systemName: "ellipsis.circle")
-                }
-            }
-        }
-    }
-}
-
-// MARK: - PERSISTENCE LAYER
 
 // Landing view model
 class ListDeck: ObservableObject {
@@ -860,5 +1089,12 @@ struct LandingWorkView_Previews: PreviewProvider {
     static var previews: some View{
         LandingWorkView()
             .environmentObject(dataManager)
+        MainBoardScrollView()
+            .environmentObject(dataManager)
+    }
+}
+struct TestView_Previews: PreviewProvider {
+    static var previews: some View {
+        TestView()
     }
 }

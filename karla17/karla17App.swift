@@ -10,13 +10,19 @@ import SwiftUI
 @main
 struct karla17App: App {
     let persistenceController = PersistenceController.shared
+    let dataManager = DataManager()
 
     var body: some Scene {
         WindowGroup {
 //            ContentView()
 //            WorklistView(worklist: WorkList())
-            LandingWorkView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+//            LandingWorkView()
+//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+//            MainBoardScrollView()
+//                .environmentObject(dataManager)
+//            TestView()
+            SplitViewTest()
+                .environmentObject(dataManager)
         }
     }
 }
