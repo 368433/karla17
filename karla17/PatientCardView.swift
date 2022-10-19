@@ -91,8 +91,8 @@ struct WorklistView: View {
                         Button("Inactive", action: {})
                     }.buttonStyle(.bordered).buttonBorderShape(.capsule).font(.footnote)
                 }
-                ForEach(worklist.workcards){ card in
-                    WorklistRowView(workCard: card)
+                ForEach(worklist.cardsList){ card in
+                    WorklistRowView(workcard: card)
                 }
             }
             .listStyle(.plain)
@@ -274,8 +274,8 @@ struct WorklistEditorView: View {
     var dataManager: DataManager? = nil
     @Environment(\.dismiss) var dismiss
     
-    init(worklist: WorkList? = nil, dataManager: DataManager? = nil){
-        self._worklist = worklist == nil ? State(initialValue: WorkList()):State(initialValue: worklist!)
+    init(worklist: Worklist? = nil, dataManager: DataManager? = nil){
+        self._worklist = worklist == nil ? State(initialValue: Worklist()):State(initialValue: worklist!)
         self.dataManager = dataManager
     }
     
@@ -305,9 +305,7 @@ struct WorklistEditorView: View {
 }
 
 struct WorklistRowView: View {
-    
-//    @ObservedObject var workcard: WorkCardModel
-    @State var workcard: Workcard
+    @ObservedObject var workcard: Workcard
     @FocusState private var focusedField: Bool
     @State private var showFullWorkcard = false
     
@@ -339,7 +337,7 @@ struct WorklistRowView: View {
                 
                 // Patient name and chart number
                 HStack{
-                    TextField("Full name", text: $workCard.patient.name)
+                    TextField("Full name", text: $workcard.patient.name)
                         .lineLimit(1)
                         .focused($focusedField)
                     Spacer()
@@ -349,13 +347,11 @@ struct WorklistRowView: View {
                 // diagnosis label and room number
                 HStack{
                     Text("Dx")
-                    TextField("Primary diagnosis", text: $workCard.primaryDiagnosis.name)
+                    TextField("Primary diagnosis", text: $workcard.primaryDiagnosis.name)
                         .focused($focusedField)
-//                        .fixedSize()
-//                    Text(workcard.primaryDiagnosis?.name ?? "No primary diagnosis")
                         .lineLimit(2)
                     Spacer()
-                    TextField("Room", text: $workCard.room)
+                    TextField("Room", text: $workcard.room)
                         .frame(width: 55)
 //                        .fixedSize()
                         .focused($focusedField)

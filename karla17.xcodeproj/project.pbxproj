@@ -18,6 +18,7 @@
 		316EC92B28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC92A28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift */; };
 		316EC93C28F2DB13002FCFF8 /* PatientCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316EC93B28F2DB13002FCFF8 /* PatientCardView.swift */; };
 		3194092428F87745000CA81D /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3194092328F87745000CA81D /* DummyData.swift */; };
+		3194092628FF8BC0000CA81D /* CoreData+ObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3194092528FF8BC0000CA81D /* CoreData+ObjectExtensions.swift */; };
 		31EC1D8128F504D10026BD60 /* CustomProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D8028F504D10026BD60 /* CustomProtocols.swift */; };
 		31EC1D8728F506FE0026BD60 /* Custom Modifiers and enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EC1D8628F506FE0026BD60 /* Custom Modifiers and enums.swift */; };
 /* End PBXBuildFile section */
@@ -55,6 +56,7 @@
 		316EC92A28F20EC2002FCFF8 /* karla17UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = karla17UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		316EC93B28F2DB13002FCFF8 /* PatientCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientCardView.swift; sourceTree = "<group>"; };
 		3194092328F87745000CA81D /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
+		3194092528FF8BC0000CA81D /* CoreData+ObjectExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+ObjectExtensions.swift"; sourceTree = "<group>"; };
 		31EC1D8028F504D10026BD60 /* CustomProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProtocols.swift; sourceTree = "<group>"; };
 		31EC1D8628F506FE0026BD60 /* Custom Modifiers and enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom Modifiers and enums.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +113,7 @@
 				316EC90928F20EC1002FCFF8 /* Persistence.swift */,
 				316EC90E28F20EC1002FCFF8 /* ContentView.swift */,
 				316EC93B28F2DB13002FCFF8 /* PatientCardView.swift */,
+				3194092528FF8BC0000CA81D /* CoreData+ObjectExtensions.swift */,
 				3194092328F87745000CA81D /* DummyData.swift */,
 				31EC1D8928F507590026BD60 /* Custom files */,
 				316EC91028F20EC2002FCFF8 /* Assets.xcassets */,
@@ -289,6 +292,7 @@
 				316EC90D28F20EC1002FCFF8 /* karla17.xcdatamodeld in Sources */,
 				316EC90828F20EC1002FCFF8 /* karla17App.swift in Sources */,
 				316EC93C28F2DB13002FCFF8 /* PatientCardView.swift in Sources */,
+				3194092628FF8BC0000CA81D /* CoreData+ObjectExtensions.swift in Sources */,
 				31EC1D8128F504D10026BD60 /* CustomProtocols.swift in Sources */,
 				31EC1D8728F506FE0026BD60 /* Custom Modifiers and enums.swift in Sources */,
 				316EC90F28F20EC1002FCFF8 /* ContentView.swift in Sources */,

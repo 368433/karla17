@@ -16,13 +16,13 @@
         <attribute name="chartNumber" optional="YES" attributeType="String"/>
         <attribute name="dateOfBirth" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="name_" optional="YES" attributeType="String"/>
         <attribute name="phoneNumber" optional="YES" attributeType="String"/>
         <attribute name="postalCode" optional="YES" attributeType="String"/>
         <attribute name="ramqNumber" optional="YES" attributeType="String"/>
         <relationship name="diagnoses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Diagnosis" inverseName="patient" inverseEntity="Diagnosis"/>
         <relationship name="visits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Visit" inverseName="patient" inverseEntity="Visit"/>
-        <relationship name="workcards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Workcard" inverseName="patient" inverseEntity="Workcard"/>
+        <relationship name="workcards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Workcard" inverseName="patient_" inverseEntity="Workcard"/>
     </entity>
     <entity name="Visit" representedClassName="Visit" syncable="YES" codeGenerationType="class">
         <attribute name="billingCode" optional="YES" attributeType="String"/>
@@ -34,7 +34,8 @@
     </entity>
     <entity name="Workcard" representedClassName="Workcard" syncable="YES" codeGenerationType="class">
         <attribute name="dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="patient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Patient" inverseName="workcards" inverseEntity="Patient"/>
+        <attribute name="room" optional="YES" attributeType="String"/>
+        <relationship name="patient_" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Patient" inverseName="workcards" inverseEntity="Patient"/>
         <relationship name="primaryDiagnosis" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Diagnosis" inverseName="workcardPrimarydx" inverseEntity="Diagnosis"/>
         <relationship name="visits" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Visit" inverseName="workcard" inverseEntity="Visit"/>
         <relationship name="worklist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Worklist" inverseName="workcards" inverseEntity="Worklist"/>
@@ -43,8 +44,8 @@
         <attribute name="dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="isPinned" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="listColor" optional="YES" attributeType="String"/>
-        <attribute name="listIcon" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="listIcon_" optional="YES" attributeType="String"/>
+        <attribute name="name_" optional="YES" attributeType="String"/>
         <relationship name="workcards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Workcard" inverseName="worklist" inverseEntity="Workcard"/>
     </entity>
 </model>
