@@ -347,7 +347,7 @@ struct WorklistRowView: View {
                 // diagnosis label and room number
                 HStack{
                     Text("Dx")
-                    TextField("Primary diagnosis", text: $workcard.primaryDiagnosis.name)
+                    TextField("Primary diagnosis", text: $workcard.primaryDx)
                         .focused($focusedField)
                         .lineLimit(2)
                     Spacer()

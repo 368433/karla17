@@ -41,10 +41,11 @@ extension Workcard {
         }
     }
     
-//    var patientName: String {
-//        get { self.patient.name }
-//        set { self.patient.name = newValue }
-//    }
+
+    var primaryDx: String {
+        get { primaryDx_ ?? "" }
+        set { primaryDx_ = newValue }
+    }
 }
 
 extension Patient {

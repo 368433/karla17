@@ -34,6 +34,7 @@
     </entity>
     <entity name="Workcard" representedClassName="Workcard" syncable="YES" codeGenerationType="class">
         <attribute name="dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="primaryDx_" optional="YES" attributeType="String"/>
         <attribute name="room" optional="YES" attributeType="String"/>
         <relationship name="patient_" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Patient" inverseName="workcards" inverseEntity="Patient"/>
         <relationship name="primaryDiagnosis" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Diagnosis" inverseName="workcardPrimarydx" inverseEntity="Diagnosis"/>
